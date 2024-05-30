@@ -11,8 +11,7 @@ router.get("/Home", function(req,res,next){
 router.post("/Home",function(req,res,next){
   console.log(req.body)
  if(ControlesDeAhorros.Login(req.body)){
-  res.render("Login")
-
+  res.redirect("Login")
  } else{
   res.send("Error")
  }
@@ -24,10 +23,23 @@ router.get("/registrarse", function(req,res,next){
 router.post("/registrarse",function(req,res,next){
   console.log(req.body)
   if(ControlesDeAhorros.Registrar(req.body)){
-    res.render("Home")
+    res.redirect("Home")
 
   }
-  
+  router.get("/Login",function(req,res,next){
+    let usuario = ControlesDeAhorros.ObtenerUsuario()
+    console.log(usuario)
+    res.render("Login", {
+      usuario: usuario
+    })
+  })
+  router.get("/cooperativa",function(req,res,next){
+    let usuario = ControlesDeAhorros.ObtenerUsuario()
+    ControlesDeAhorros.AgregarCooperativa()
+    res.render("Login", {
+      usuario: usuario
+    })
+  })
 
 })
 

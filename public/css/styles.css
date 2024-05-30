@@ -1,0 +1,18 @@
+body{
+  background: url(../images/Puede-un-inquilino-ser-miembro-de-la-Junta-Directiva-de-la-Asamblea-de-Propietarios.jpg);
+  }
+  input{
+      height: 25px;
+      border-radius: 10px;
+  
+  }
+  
+  
+  
+  
+  
+  #head{
+      display: flex;
+      justify-content: space-around;
+      height: 15vh;
+  }
