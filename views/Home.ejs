@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Hola MundoS</p>
+    <form class="d-flex" method="post"  >
+        <input  type="input" placeholder="Nombre" name="nombre" required>
+        <input  type="password" placeholder="Clave" name="clave"  required>
+        <button class="btn btn-success" type="submit">Agregar</button>
+      </form>
+      <button id="boton">Registrarse</button>
+</body>
+<script>
+    let boton = document.getElementById("boton")
+    boton.addEventListener("click", function(){
+        location.replace("/registrarse")
+    })
+</script>
+</html>
