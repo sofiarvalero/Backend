@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
+</head>
+<body>
+    <div id="centrar">
+        <% cooperativa.forEach(cooperativa => { %>
+     
+            <div class="fondos">
+                <h1>Esta es La coperativa Nº <%= cooperativa.id  %> </h1>
+                <h2>Te ofrecemos un pago de: <%= cooperativa.montoTotal  %> </h2>
+                <p>Tan solo tienes que pagar: <%= cooperativa.pagoPeriodico  %> los dias <%= cooperativa.fechaPago  %> por solo <%= cooperativa.duracion  %> </p>
+                <p>Las personas que han confiado en nosotros son:  <% cooperativa.usuarios.forEach(usuario => { %> 
+                    <%= usuario %>
+                 </p>
+                <% }) %>
+                <form method="post">
+                    <input type="hidden" value="<%= cooperativa.id  %>"  name="id">
+                    <input type="submit" value="Unirme a esta cooperativa">
+                </form>
+            </div>
+      <%  }); %>
+    </div>
+   
+  
+</body>
+</html>

@@ -4,14 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
 </head>
 <body>
-    <p><%= usuario.nombre %></p>
-    <p><%= usuario.userName %></p>
-    <p><%= usuario.saldo %></p>
-    <p><%= usuario.cooperativas %></p>
-
-    <a href="/cooperativa"><button id="boton">Agregar cooperativa</button>
-
+    <div id="alinear">
+        <div class="centrar fondos">
+            <h1>Bienvenid@: <%= usuario.nombre %></h1>
+            <h2>Tu saldo es de: <%= usuario.saldo %></h2>
+            <p><%= usuario.cooperativas %></p>
+      <div id="botonesCont">
+        <a href="/cooperativa"><button class="boton">Ver cooperativas</button>
+            <br>
+            <a href="/editarUsuario"><button class="boton">Editar Usuario</button></a>
+      </div>
+            
+        </div>
+        <form method="post">
+            <input type="number" name="valor" placeholder="Depositar/Retirar">
+            <input type="submit">
+        </form>
+    </div>
+   
 </body>
 </html>
