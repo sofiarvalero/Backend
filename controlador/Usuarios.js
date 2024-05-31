@@ -1,7 +1,9 @@
 let arrayUsers = []
 let contador = 1
 let usuarioAunt = {}
-class ControlesDeAhorros {
+let cooperativas = require("../cooperativas")
+
+class ControladorUsuarios {
     Registrar(datos) {
       let username = datos.userName
       for(let i= 0; i<arrayUsers.length;i++){
@@ -42,12 +44,22 @@ class ControlesDeAhorros {
       ObtenerUsuario(){
         return usuarioAunt
       }
-      AgregarCooperativa(){
-        usuarioAunt.cooperativas.push(3)
+      AgregarCooperativa(id){
+        
+        usuarioAunt.cooperativas.push("Eres parte de la cooperativa numero "+Number(id))
+        for(let i =0;i<cooperativas.length;i++){
+          if(cooperativas[i].id==id){
+            cooperativas[i].usuarios.push(usuarioAunt.nombre)
+          }
+        }
       }
+      ModificarSaldo(valor){
+        usuarioAunt.saldo = usuarioAunt.saldo + valor
+      }
+    
     }
-   
-     
+  
 
 
- module.exports = new ControlesDeAhorros
+ module.exports = new ControladorUsuarios
+  
