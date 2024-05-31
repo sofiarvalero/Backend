@@ -1,43 +1,55 @@
 body{
-background: url(../images/Puede-un-inquilino-ser-miembro-de-la-Junta-Directiva-de-la-Asamblea-de-Propietarios.jpg);
-}
-input{
-    height: 25px;
-    border-radius: 10px;
-    margin: 10px;
-    margin-left: 20px;
-}
-
-#centrar{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-#cabecera{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    text-align: center;
-
-}
-.boton{
-    width: 120px;
-    height: 30px;
-    border-radius: 10px;
-    background-color: rgb(62, 62, 201);
-    color: white;
-}
-.fondos{
-    background-color: rgb(255, 255, 255,0.7);
-    width: 50%;
-    border-radius: 10px;
-}
-#alinear{
-    display: flex;
-    justify-content: space-around;
-}
-#botonesCont{
-    display: flex;
-}
+    background: url(../images/Puede-un-inquilino-ser-miembro-de-la-Junta-Directiva-de-la-Asamblea-de-Propietarios.jpg);
+    }
+    input{
+        height: 25px;
+        border-radius: 10px;
+        margin: 10px;
+        margin-left: 20px;
+    }
+    
+    #centrar{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        flex-wrap: wrap;
+    
+    }
+    
+    #cabecera{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        text-align: center;
+    
+    }
+    .boton{
+        width: 120px;
+        height: 30px;
+        border-radius: 10px;
+        background-color: rgb(62, 62, 201);
+        color: white;
+    }
+    .fondos{
+        background-color: rgb(255, 255, 255,0.7);
+        width: 50%;
+        border-radius: 10px;
+    }
+    #alinear{
+        display: flex;
+        justify-content: space-around;
+    }
+    #botonesCont{
+        display: flex;
+        justify-content: center;
+        align-content: space-around;
+        flex-direction: column;
+    
+    }
+    .inputValor{
+        width: 70%;
+    }
+    #espacio{
+        margin-bottom: 25px;
+    }

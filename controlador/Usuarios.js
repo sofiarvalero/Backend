@@ -2,6 +2,7 @@ let arrayUsers = []
 let contador = 1
 let usuarioAunt = {}
 let cooperativas = require("../cooperativas")
+let prestamos = require("../cuentasPrestamo")
 
 class ControladorUsuarios {
     Registrar(datos) {
@@ -15,9 +16,15 @@ class ControladorUsuarios {
         nombre:datos.nombre,
         clave: datos.clave,
         userName: username,
-        saldo: 0,
         id: contador,
-        cooperativas: []
+        cooperativas: [],
+        tipoCuenta : [
+          {
+            tipo: "Corriente",
+            saldo: 0
+          }
+        ],
+        prestamos: []
       }
       arrayUsers.push(objeto)
       contador++
@@ -53,17 +60,48 @@ class ControladorUsuarios {
           }
         }
       }
-      ModificarSaldo(valor){
-        usuarioAunt.saldo = usuarioAunt.saldo + valor
+      ModificarSaldoCorriente(valor){
+        usuarioAunt.tipoCuenta[0].saldo = usuarioAunt.tipoCuenta[0].saldo + valor
       }
     ModificarUsuario(datos){
-      console.log("LLegue")
       let nuevoNombre = datos.nuevoNombre
       let nuevoClave = datos.nuevaClave
       let nuevoUsuario = datos.nuevoUsuario
       usuarioAunt.nombre = nuevoNombre
       usuarioAunt.clave = nuevoClave
       usuarioAunt.userName= nuevoUsuario
+    }
+    CrearCuentaAhorro(){
+      if(!usuarioAunt.tipoCuenta[1]){
+        usuarioAunt.tipoCuenta.push({
+          tipo: "Cuenta Ahorro",
+          saldo: 0,
+          interes: 0.05
+        })
+      }else{
+        return false
+      }
+    }
+    ModificarSaldoAhorro(valor){
+      if(usuarioAunt.tipoCuenta[1]){
+        usuarioAunt.tipoCuenta[1].saldo = usuarioAunt.tipoCuenta[1].saldo + valor
+      }
+      else{
+        return false
+      }
+    }
+    CerrarSesion(){
+      usuarioAunt = null
+    }
+    AgregarPrestamo(id){
+        
+      usuarioAunt.prestamos.push("Has pedido un prestamo a la cuenta de prestamos numero"+ id)
+      for(let i =0;i<prestamos.length;i++){
+        if(prestamos[i].id==id){
+          prestamos[i].usuarios.push(usuarioAunt.nombre)
+        }
+      }
+      usuarioAunt.tipoCuenta[0].saldo = prestamos.cantidadPrestamo
     }
     }
   

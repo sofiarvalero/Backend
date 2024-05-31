@@ -11,20 +11,44 @@
     <div id="alinear">
         <div class="centrar fondos">
             <h1>Bienvenid@: <%= usuario.nombre %></h1>
-            <h2>Tu saldo es de: <%= usuario.saldo %></h2>
+            <h2>Tu saldo corriente es de: <%= usuario.tipoCuenta[0].saldo %></h2>
+            <% if (usuario.tipoCuenta[1]) {%>
+                <h2>Tu saldo de ahorro es de: <%= usuario.tipoCuenta[1].saldo %> <p> Las cuentas de ahorro tienen un <%= usuario.tipoCuenta[1].interes %> de interes </p> </h2>
+            <% } %>
             <p><%= usuario.cooperativas %></p>
-      <div id="botonesCont">
-        <a href="/cooperativa"><button class="boton">Ver cooperativas</button>
-            <br>
-            <a href="/editarUsuario"><button class="boton">Editar Usuario</button></a>
-      </div>
-            
         </div>
-        <form method="post">
-            <input type="number" name="valor" placeholder="Depositar/Retirar">
-            <input type="submit">
-        </form>
+        <div>
+            <form method="post" >
+                <input type="number" name="valorCorriente" placeholder="Depositar/Retirar Cuenta corriente" class="inputValor">
+                <input type="submit" class="boton">
+            </form>
+            <form method="post" >
+                <input type="number" name="valorAhorro" placeholder="Depositar/Retirar Cuenta ahorro" class="inputValor">
+                <input type="submit" class="boton">
+            </form>
+        </div>
+        
+        <div id="botonesCont">
+            <div id="espacio">
+                <a href="/cooperativa"><button class="boton">Ver cooperativas</button>
+            </div>
+            <div>
+                <a href="/logout"><button class="boton">Cerrar Sesion</button></a>
+            </div>
+            <div>
+                <a href="/cuentaAhorro"><button class="boton">Crear Cuenta de ahorro</button></a>
+            </div>
+        </div>
     </div>
+    
    
+
 </body>
+<script>
+    function click(){
+        console.log("entre")
+
+        location.replace("/cooperativas")
+}
+</script>
 </html>

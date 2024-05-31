@@ -35,14 +35,18 @@ router.post("/registrarse",function(req,res,next){
     })
   })
   router.get("/cooperativa",function(req,res,next){
-    let usuario = ControladorUsuarios.ObtenerUsuario()
     res.render("cooperativas",{
       cooperativa:cooperativas
     })
   })
 router.post("/Login",function(req,res,next){
   let usuario = ControladorUsuarios.ObtenerUsuario()
-    ControladorUsuarios.ModificarSaldo(Number(req.body.valor))
+  if(req.body.valorCorriente){
+    ControladorUsuarios.ModificarSaldoCorriente(Number(req.body.valorCorriente))
+  }else{
+    ControladorUsuarios.ModificarSaldoAhorro(Number(req.body.valorAhorro))
+  }
+
   res.render("Login",{
     usuario:usuario
   } 
@@ -53,14 +57,18 @@ router.post("/cooperativa",function(req,res,next){
   ControladorUsuarios.AgregarCooperativa(req.body.id)
   res.redirect("Login")
 })
-router.get("/editarUsuario",function(req,res,next){
-  res.render("editarUsuario")
-})
-router.put("/editarUsuarios",function(req,res,next){
+router.put("/editarUsuario",function(req,res,next){
   ControladorUsuarios.ModificarUsuario(req.body)
   console.log("Lleguese")
   res.redirect("Login")
 })
+router.get("/logout",function(req,res,next){
+  ControladorUsuarios.CerrarSesion()
+  res.redirect("Home")
+})
+router.get("/cuentaAhorro",function(req,res,next){
+  ControladorUsuarios.CrearCuentaAhorro()
+  res.redirect("Login")
 
-
+})
 module.exports = router;
