@@ -30,6 +30,7 @@ body{
         border-radius: 10px;
         background-color: rgb(62, 62, 201);
         color: white;
+        cursor: pointer;
     }
     .fondos{
         background-color: rgb(255, 255, 255,0.7);
@@ -50,6 +51,6 @@ body{
     .inputValor{
         width: 70%;
     }
-    #espacio{
+    .espacio{
         margin-bottom: 25px;
     }

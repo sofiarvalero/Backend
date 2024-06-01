@@ -7,3 +7,4 @@ let cuentasPrestamo = [
         usuariosAsociados: []
     }
 ]
+module.exports = cuentasPrestamo

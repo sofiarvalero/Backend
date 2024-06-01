@@ -16,6 +16,7 @@
                 <h2>Tu saldo de ahorro es de: <%= usuario.tipoCuenta[1].saldo %> <p> Las cuentas de ahorro tienen un <%= usuario.tipoCuenta[1].interes %> de interes </p> </h2>
             <% } %>
             <p><%= usuario.cooperativas %></p>
+            <p> <%= usuario.prestamistas  %> </p>
         </div>
         <div>
             <form method="post" >
@@ -29,11 +30,14 @@
         </div>
         
         <div id="botonesCont">
-            <div id="espacio">
+            <div class="espacio">
                 <a href="/cooperativa"><button class="boton">Ver cooperativas</button>
             </div>
-            <div>
+            <div class="espacio">
                 <a href="/logout"><button class="boton">Cerrar Sesion</button></a>
+            </div>
+            <div class="espacio">
+                <a href="/prestamos"><button class="boton">Ver Prestamos</button></a>
             </div>
             <div>
                 <a href="/cuentaAhorro"><button class="boton">Crear Cuenta de ahorro</button></a>

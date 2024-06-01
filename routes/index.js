@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 let ControladorUsuarios = require("../controlador/Usuarios")
 let cooperativas = require("../cooperativas")
+let prestamos = require("../cuentasPrestamo")
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -70,5 +71,16 @@ router.get("/cuentaAhorro",function(req,res,next){
   ControladorUsuarios.CrearCuentaAhorro()
   res.redirect("Login")
 
+})
+router.get("/prestamos",function(req,res,next){
+  console.log(prestamos)
+  res.render("prestamos",{
+    prestamistas:prestamos
+  })
+})
+router.post("/prestamos",function(req,res,next){
+  console.log(req.body.prestamo)
+  ControladorUsuarios.AgregarPrestamo(req.body.prestamo)
+res.redirect("Login")
 })
 module.exports = router;

@@ -24,7 +24,7 @@ class ControladorUsuarios {
             saldo: 0
           }
         ],
-        prestamos: []
+        prestamistas: []
       }
       arrayUsers.push(objeto)
       contador++
@@ -53,10 +53,11 @@ class ControladorUsuarios {
       }
       AgregarCooperativa(id){
         
-        usuarioAunt.cooperativas.push("Eres parte de la cooperativa numero "+Number(id))
         for(let i =0;i<cooperativas.length;i++){
           if(cooperativas[i].id==id){
             cooperativas[i].usuarios.push(usuarioAunt.nombre)
+            usuarioAunt.cooperativas.push("Eres parte de la cooperativa numero "+Number(id)+ " Y tus dias de pago son los " + cooperativas[i].fechaPago)
+
           }
         }
       }
@@ -93,15 +94,16 @@ class ControladorUsuarios {
     CerrarSesion(){
       usuarioAunt = null
     }
-    AgregarPrestamo(id){
-        
-      usuarioAunt.prestamos.push("Has pedido un prestamo a la cuenta de prestamos numero"+ id)
+    AgregarPrestamo(prestamo){
+        console.log(prestamo)
       for(let i =0;i<prestamos.length;i++){
-        if(prestamos[i].id==id){
-          prestamos[i].usuarios.push(usuarioAunt.nombre)
+        if(prestamos[i].id==prestamo){
+          prestamos[i].usuariosAsociados.push(usuarioAunt.nombre)
+          usuarioAunt.prestamistas.push("Has pedido un prestamo a la cuenta de prestamos numero "+ prestamo + " ,Tus dias de pago son los " + prestamos[i].fechasPago)
+          usuarioAunt.tipoCuenta[0].saldo =  usuarioAunt.tipoCuenta[0].saldo + prestamos[i].cantidadPrestamo
+
         }
       }
-      usuarioAunt.tipoCuenta[0].saldo = prestamos.cantidadPrestamo
     }
     }
   

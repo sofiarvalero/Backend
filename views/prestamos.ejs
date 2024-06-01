@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
+</head>
+<body>
+    <div id="centrar">
+        <% prestamistas.forEach(prestamos => { %>
+     
+            <div class="fondos">
+                <h1>Esta es la cuenta de prestamo Nº <%= prestamos.id  %> </h1>
+                <h2>Te ofrecemos un prestamo de: <%= prestamos.montoTotal  %> </h2>
+                <p>Tan solo tiene un interes de <%= prestamos.cantidadInteres  %> y debes pagarlo los <%= prestamos.fechaPago  %> de cada mes. </p>
+                <p>Las personas que han confiado en nosotros son:  <% prestamos.usuariosAsociados.forEach(usuario => { %> 
+                    <%= usuario %>
+                 </p>
+                <% }) %>
+                <form method="post">
+                    <input type="hidden" value="<%= prestamos.id  %>"  name="prestamo">
+                    <input type="submit" value="Unirme a esta prestamos">
+                </form>
+            </div>
+      <%  }); %>
+    </div>
+    <a href="/Login"><button class="boton">Volver</button></a>
+
+  
+</body>
+</html>
