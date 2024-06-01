@@ -59,9 +59,9 @@ router.post("/cooperativa",function(req,res,next){
   res.redirect("Login")
 })
 router.put("/editarUsuario",function(req,res,next){
-  ControladorUsuarios.ModificarUsuario(req.body)
+  let user = ControladorUsuarios.ModificarUsuario(req.body)
   console.log("Lleguese")
-  res.redirect("Login")
+  res.send(user)
 })
 router.get("/logout",function(req,res,next){
   ControladorUsuarios.CerrarSesion()
@@ -82,5 +82,50 @@ router.post("/prestamos",function(req,res,next){
   console.log(req.body.prestamo)
   ControladorUsuarios.AgregarPrestamo(req.body.prestamo)
 res.redirect("Login")
+})
+router.delete("/usuario/:id",function(req,res,next){
+  console.log(req.params.id)
+  let usuario = ControladorUsuarios.EliminarUsuario(req.params.id)
+  res.send(usuario)
+})
+router.post("/agregarCooperativa",function(req,res,next){
+  cooperativas.push(req.body)
+  res.send(cooperativas)
+})
+router.post("/agregarPrestamo",function(req,res,next){
+  prestamos.push(req.body)
+  res.send(prestamos)
+})
+router.delete("/eliminarCooperativa/:id",function(req,res,next){
+  for(let i=0;i<cooperativas.length;i++){
+    if(cooperativas[i].id == req.params.id){
+      cooperativas.splice(i,1)
+    }
+  }
+  res.send(cooperativas)
+})
+router.delete("/eliminarPrestamo/:id",function(req,res,next){
+  for(let i=0;i<prestamos.length;i++){
+    if(prestamos[i].id == req.params.id){
+      prestamos.splice(i,1)
+    }
+  }
+  res.send(prestamos)
+})
+router.put("/editarCooperativa/:id",function(req,res,next){
+  for(let i=0;i<cooperativas.length;i++){
+    if(cooperativas[i].id == req.params.id){
+      cooperativas[i] = req.body
+    }
+  }
+  res.send(cooperativas)
+})
+router.put("/editarPrestamo/:id",function(req,res,next){
+  for(let i=0;i<prestamos.length;i++){
+    if(prestamos[i].id == req.params.id){
+      prestamos[i] = req.body
+    }
+  }
+  res.send(prestamos)
 })
 module.exports = router;

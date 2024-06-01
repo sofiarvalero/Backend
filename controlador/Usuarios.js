@@ -71,6 +71,7 @@ class ControladorUsuarios {
       usuarioAunt.nombre = nuevoNombre
       usuarioAunt.clave = nuevoClave
       usuarioAunt.userName= nuevoUsuario
+      return usuarioAunt
     }
     CrearCuentaAhorro(){
       if(!usuarioAunt.tipoCuenta[1]){
@@ -104,6 +105,10 @@ class ControladorUsuarios {
 
         }
       }
+    }
+    EliminarUsuario(id){
+      arrayUsers.splice(id,1)
+      return arrayUsers
     }
     }
   
