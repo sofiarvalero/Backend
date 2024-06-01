@@ -1,5 +1,6 @@
 body{
     background: url(../images/Puede-un-inquilino-ser-miembro-de-la-Junta-Directiva-de-la-Asamblea-de-Propietarios.jpg);
+    font-family: sans-serif;
     }
     input{
         height: 25px;
@@ -19,14 +20,22 @@ body{
     
     #cabecera{
         display: flex;
-        justify-content: space-around;
         align-items: center;
         text-align: center;
+        justify-content: space-around;
     
+    }
+    #botonRegistro{
+        margin-left: 15px;
+    }
+    #formulario{
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .boton{
         width: 120px;
-        height: 30px;
+        height: 35px;
         border-radius: 10px;
         background-color: rgb(62, 62, 201);
         color: white;

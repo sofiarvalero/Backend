@@ -3,15 +3,11 @@ var router = express.Router();
 let ControladorUsuarios = require("../controlador/Usuarios")
 let cooperativas = require("../cooperativas")
 let prestamos = require("../cuentasPrestamo")
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+
 router.get("/Home", function(req,res,next){
   res.render("Home")
 })
 router.post("/Home",function(req,res,next){
-  console.log(req.body)
  if(ControladorUsuarios.Login(req.body)){
   res.redirect("Login")
  } else{
@@ -23,14 +19,12 @@ router.get("/registrarse", function(req,res,next){
   res.render("registrarse")
 })
 router.post("/registrarse",function(req,res,next){
-  console.log(req.body)
   if(ControladorUsuarios.Registrar(req.body)){
     res.redirect("Home")
 
   }
   router.get("/Login",function(req,res,next){
     let usuario = ControladorUsuarios.ObtenerUsuario()
-    console.log(usuario)
     res.render("Login", {
       usuario: usuario
     })
@@ -60,7 +54,6 @@ router.post("/cooperativa",function(req,res,next){
 })
 router.put("/editarUsuario",function(req,res,next){
   let user = ControladorUsuarios.ModificarUsuario(req.body)
-  console.log("Lleguese")
   res.send(user)
 })
 router.get("/logout",function(req,res,next){
@@ -73,18 +66,15 @@ router.get("/cuentaAhorro",function(req,res,next){
 
 })
 router.get("/prestamos",function(req,res,next){
-  console.log(prestamos)
   res.render("prestamos",{
     prestamistas:prestamos
   })
 })
 router.post("/prestamos",function(req,res,next){
-  console.log(req.body.prestamo)
   ControladorUsuarios.AgregarPrestamo(req.body.prestamo)
 res.redirect("Login")
 })
 router.delete("/usuario/:id",function(req,res,next){
-  console.log(req.params.id)
   let usuario = ControladorUsuarios.EliminarUsuario(req.params.id)
   res.send(usuario)
 })
