@@ -1,52 +1,60 @@
 var express = require('express');
 var router = express.Router();
-let ControladorUsuarios = require("../controlador/Usuarios")
+let ControladorUsuarios = require("../Controladores/UsuariosControlador")
 let cooperativas = require("../cooperativas")
 let prestamos = require("../cuentasPrestamo")
+const jwt = require('jsonwebtoken')
+require('dotenv').config();
 
 router.get("/Home", function(req,res,next){
   res.render("Home")
 })
 router.post("/Home",function(req,res,next){
- if(ControladorUsuarios.Login(req.body)){
-  res.redirect("Login")
- } else{
-  res.send("Error")
- }
-
+  ControladorUsuarios.Login(req.body)
+  .then((result) => {
+    res.cookie('jwt',result)
+    res.redirect("Login")
+   })
+   .catch((err) => {
+    console.error(err)
+    res.redirect("Home")
+   })
 })
 router.get("/registrarse", function(req,res,next){
   res.render("registrarse")
 })
 router.post("/registrarse",function(req,res,next){
-  if(ControladorUsuarios.Registrar(req.body)){
+  ControladorUsuarios.Registrar(req.body)
+  .then(()=>{
     res.redirect("Home")
-
-  }
-  router.get("/Login",function(req,res,next){
-    let usuario = ControladorUsuarios.ObtenerUsuario()
-    res.render("Login", {
-      usuario: usuario
-    })
   })
-  router.get("/cooperativa",function(req,res,next){
-    res.render("cooperativas",{
-      cooperativa:cooperativas
-    })
+  .catch((e)=>{
+    console.error(e)
+    res.redirect("Home")
   })
-router.post("/Login",function(req,res,next){
-  let usuario = ControladorUsuarios.ObtenerUsuario()
-  if(req.body.valorCorriente){
-    ControladorUsuarios.ModificarSaldoCorriente(Number(req.body.valorCorriente))
-  }else{
-    ControladorUsuarios.ModificarSaldoAhorro(Number(req.body.valorAhorro))
-  }
-
-  res.render("Login",{
-    usuario:usuario
-  } 
- )
 })
+router.get("/Login",function(req,res,next){
+  let token = req.cookies.jwt
+  let decodificado = jwt.decode(token,process.env.JWT_FIRMA)
+  res.render("Login",{ usuario:decodificado})
+})
+router.get("/cooperativa",function(req,res,next){
+ res.render("cooperativas",{
+   cooperativa:cooperativas
+ })
+})
+router.post("/Login",function(req,res,next){
+let usuario = ControladorUsuarios.ObtenerUsuario()
+if(req.body.valorCorriente){
+ ControladorUsuarios.ModificarSaldoCorriente(Number(req.body.valorCorriente))
+}else{
+ ControladorUsuarios.ModificarSaldoAhorro(Number(req.body.valorAhorro))
+}
+
+res.render("Login",{
+ usuario:usuario
+} 
+)
 })
 router.post("/cooperativa",function(req,res,next){
   ControladorUsuarios.AgregarCooperativa(req.body.id)

@@ -11,12 +11,9 @@
     <div id="alinear">
         <div class="centrar fondos">
             <h1>Bienvenid@: <%= usuario.nombre %></h1>
-            <h2>Tu saldo corriente es de: <%= usuario.tipoCuenta[0].saldo %></h2>
-            <% if (usuario.tipoCuenta[1]) {%>
-                <h2>Tu saldo de ahorro es de: <%= usuario.tipoCuenta[1].saldo %> <p> Las cuentas de ahorro tienen un <%= usuario.tipoCuenta[1].interes %> de interes </p> </h2>
-            <% } %>
-            <p><%= usuario.cooperativas %></p>
-            <p> <%= usuario.prestamistas  %> </p>
+            <h2>Tu saldo corriente es de:1</h2>
+            <p><%= usuario.cedula %></p>
+            <p> <%= usuario.telefono  %> </p>
         </div>
         <div>
             <form method="post" >

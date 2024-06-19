@@ -1,52 +1,60 @@
-let arrayUsers = []
-let contador = 1
-let usuarioAunt = {}
 let cooperativas = require("../cooperativas")
 let prestamos = require("../cuentasPrestamo")
+const conexion = require("../conexionBD")
+const bcryptjs = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+require('dotenv').config();
 
-class ControladorUsuarios {
+class ModeloUsuarios {
     Registrar(datos) {
-      let username = datos.userName
-      for(let i= 0; i<arrayUsers.length;i++){
-        if(arrayUsers[i].userName == username){
-          return "El usuario ya existe"
-      }
-     }
-      let objeto = {
-        nombre:datos.nombre,
-        clave: datos.clave,
-        userName: username,
-        id: contador,
-        cooperativas: [],
-        tipoCuenta : [
-          {
-            tipo: "Corriente",
-            saldo: 0
+      return new Promise(async(resolve,reject)=>{
+        let nombre = datos.nombre
+        let usuario = datos.usuario
+        let clave = datos.clave
+        let cedula = datos.cedula
+        let telefono = datos.telefono
+        let claveEncriptada = await bcryptjs.hash(clave,8)
+        let query = `INSERT INTO usuarios (nombre,usuario,clave,cedula,telefono) VALUES ('${nombre}','${usuario}', '${claveEncriptada}', '${cedula}', '${telefono}')`
+        conexion.query(query,(err,result)=>{ 
+          if(err){
+            reject(err)
+          }else{
+            resolve()
           }
-        ],
-        prestamistas: []
-      }
-      arrayUsers.push(objeto)
-      contador++
-      console.log(arrayUsers)
-      return true
+        })
+      })
+     
+
     }
     Login(datos){
-      let objetoLogin = {
-        userName: datos.userName,
-        clave: datos.clave
-      }
-      console.log(objetoLogin)
-      for(let i= 0; i<arrayUsers.length;i++){
-        if(arrayUsers[i].userName == objetoLogin.userName && arrayUsers[i].clave == objetoLogin.clave){
-          console.log("Validacion correcta")
-          usuarioAunt = arrayUsers[i]
-          return true
-        }
-       }
-        console.log("Fallo al validar")
-        console.log(arrayUsers)
-        return null
+      return new Promise((resolve,reject)=>{
+        let usuario = datos.usuario
+        let clave = datos.clave
+        let query = `SELECT * FROM usuarios WHERE usuario = '${usuario}'`
+        conexion.query(query,async function(err,result){
+          if(err){
+            reject(err)
+          }else{
+            if(result.length > 0){
+              let claveEncriptada = result[0].clave
+              let claveDesencriptada = await bcryptjs.compare(clave,claveEncriptada)
+              if(claveDesencriptada){
+                let id = result[0].id
+                let nombre = result[0].nombre
+                let cedula = result[0].cedula
+                let telefono = result[0].telefono
+                const token = jwt.sign({id:id,usuario:usuario,nombre:nombre,cedula:cedula,telefono:telefono}, process.env.JWT_FIRMA)
+                resolve(token)
+              }else{
+                reject(new Error("Contraseña Incorrecta"))
+              }
+            }else{
+              reject(new Error("Usuario no Encontrado"))
+            }
+          }
+        })
+      })
+      
       }
       ObtenerUsuario(){
         return usuarioAunt
@@ -114,5 +122,5 @@ class ControladorUsuarios {
   
 
 
- module.exports = new ControladorUsuarios
+ module.exports = new ModeloUsuarios
   

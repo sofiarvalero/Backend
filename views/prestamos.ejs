@@ -13,7 +13,7 @@
      
             <div class="fondos">
                 <h1>Esta es la cuenta de prestamo Nº <%= prestamos.id  %> </h1>
-                <h2>Te ofrecemos un prestamo de: <%= prestamos.montoTotal  %> </h2>
+                <h2>Te ofrecemos un prestamo de: <%= prestamos.cantidadPrestamo  %> </h2>
                 <p>Tan solo tiene un interes de <%= prestamos.cantidadInteres  %> y debes pagarlo los <%= prestamos.fechaPago  %> de cada mes. </p>
                 <p>Las personas que han confiado en nosotros son:  <% prestamos.usuariosAsociados.forEach(usuario => { %> 
                     <%= usuario %>
