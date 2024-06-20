@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 let ControladorUsuarios = require("../Controladores/UsuariosControlador")
-let cooperativas = require("../cooperativas")
-let prestamos = require("../cuentasPrestamo")
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 
@@ -53,8 +51,7 @@ if(req.body.valorCorriente){
 
 res.render("Login",{
  usuario:usuario
-} 
-)
+})
 })
 router.post("/cooperativa",function(req,res,next){
   ControladorUsuarios.AgregarCooperativa(req.body.id)
@@ -65,7 +62,8 @@ router.put("/editarUsuario",function(req,res,next){
   res.send(user)
 })
 router.get("/logout",function(req,res,next){
-  ControladorUsuarios.CerrarSesion()
+  ControladorUsuarios.Logout(req.cookies.jwt)
+  res.clearCookie("jwt")
   res.redirect("Home")
 })
 router.get("/cuentaAhorro",function(req,res,next){

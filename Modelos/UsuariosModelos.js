@@ -1,5 +1,6 @@
 let cooperativas = require("../cooperativas")
 let prestamos = require("../cuentasPrestamo")
+const ControladorCuentas = require('../Controladores/CuentasControlador')
 const conexion = require("../conexionBD")
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -19,7 +20,21 @@ class ModeloUsuarios {
           if(err){
             reject(err)
           }else{
-            resolve()
+            let query2 = `SELECT * FROM usuarios WHERE usuario = '${usuario}'`
+            conexion.query(query2,(err,result)=>{
+              if(err){
+                reject(err)
+              }else{
+                let ID = result[0].id
+                ControladorCuentas.CrearCorriente(ID)
+                .then(()=>{
+                  resolve()
+                })
+                .catch((e)=>{
+                  reject(e)
+                })
+              }
+            })
           }
         })
       })
@@ -56,9 +71,6 @@ class ModeloUsuarios {
       })
       
       }
-      ObtenerUsuario(){
-        return usuarioAunt
-      }
       AgregarCooperativa(id){
         
         for(let i =0;i<cooperativas.length;i++){
@@ -69,9 +81,7 @@ class ModeloUsuarios {
           }
         }
       }
-      ModificarSaldoCorriente(valor){
-        usuarioAunt.tipoCuenta[0].saldo = usuarioAunt.tipoCuenta[0].saldo + valor
-      }
+    
     ModificarUsuario(datos){
       let nuevoNombre = datos.nuevoNombre
       let nuevoClave = datos.nuevaClave
@@ -81,39 +91,18 @@ class ModeloUsuarios {
       usuarioAunt.userName= nuevoUsuario
       return usuarioAunt
     }
-    CrearCuentaAhorro(){
-      if(!usuarioAunt.tipoCuenta[1]){
-        usuarioAunt.tipoCuenta.push({
-          tipo: "Cuenta Ahorro",
-          saldo: 0,
-          interes: 0.05
-        })
-      }else{
-        return false
-      }
-    }
-    ModificarSaldoAhorro(valor){
-      if(usuarioAunt.tipoCuenta[1]){
-        usuarioAunt.tipoCuenta[1].saldo = usuarioAunt.tipoCuenta[1].saldo + valor
-      }
-      else{
-        return false
-      }
-    }
-    CerrarSesion(){
-      usuarioAunt = null
-    }
-    AgregarPrestamo(prestamo){
-        console.log(prestamo)
-      for(let i =0;i<prestamos.length;i++){
-        if(prestamos[i].id==prestamo){
-          prestamos[i].usuariosAsociados.push(usuarioAunt.nombre)
-          usuarioAunt.prestamistas.push("Has pedido un prestamo a la cuenta de prestamos numero "+ prestamo + " ,Tus dias de pago son los " + prestamos[i].fechasPago)
-          usuarioAunt.tipoCuenta[0].saldo =  usuarioAunt.tipoCuenta[0].saldo + prestamos[i].cantidadPrestamo
-
+   
+   
+    Logout(cookie){
+      return new Promise((resolve,reject)=>{
+        if(cookie){
+          resolve()
+        }else{
+          reject(new Error("No has iniciado sesion"))
         }
-      }
+      })
     }
+   
     EliminarUsuario(id){
       arrayUsers.splice(id,1)
       return arrayUsers

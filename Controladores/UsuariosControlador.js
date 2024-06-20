@@ -4,21 +4,34 @@ class ControladorUsuarios{
 
     Registrar(Datos){
         return new Promise((resolve,reject)=>{
-            if(usuariosModelos.Registrar(Datos)){
-                resolve()
-            }else{
-                reject(e)
-            }
+        usuariosModelos.Registrar(Datos)
+        .then(()=>{
+            resolve()
+        })
+       .catch((e)=>{
+        reject(e)
+       })
         })
     }
     Login(Datos){
         return new Promise((resolve,reject)=>{
-            let token = usuariosModelos.Login(Datos)
-            if(token){
-                resolve(token)
-            }else{
+            usuariosModelos.Login(Datos)
+            .then((result)=>{
+                resolve(result)
+            })
+           .catch((e)=>{
+            reject(e)
+           })
+        })
+    }
+    Logout(cookie){
+        return new Promise((resolve,reject)=>{
+            usuariosModelos.Logout(cookie)
+            .then(() => {
+                resolve()
+            }).catch((e) => {
                 reject(e)
-            }
+            });
         })
     }
 }
