@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-06-2024 a las 17:44:22
+-- Tiempo de generación: 22-06-2024 a las 00:23:58
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -73,7 +73,14 @@ INSERT INTO `cuentacooperativa` (`idCuenta`, `idCooperativa`, `idUsuario`, `id`)
 (34, 6, 16, 5),
 (39, 2, 18, 8),
 (39, 1, 18, 9),
-(39, 3, 18, 11);
+(39, 3, 18, 11),
+(30, 1, 14, 16),
+(30, 8, 14, 17),
+(30, 8, 14, 18),
+(30, 2, 14, 19),
+(41, 3, 19, 20),
+(41, 1, 19, 21),
+(43, 2, 20, 22);
 
 -- --------------------------------------------------------
 
@@ -137,8 +144,8 @@ INSERT INTO `cuentas` (`tipo`, `saldo`, `usuario_id`, `numero`, `interes`, `id`)
 ('ahorro', 10.000, 4, 9982021016, 1.000, 27),
 ('ahorro', 10.000, 4, 5050263380, 0.000, 28),
 ('ahorro', 10.000, 4, 8409821707, 1.000, 29),
-('corriente', 0.000, 14, 6623871212, NULL, 30),
-('ahorro', 0.000, 14, 798856968, 1.000, 31),
+('corriente', 104485.000, 14, 6623871212, NULL, 30),
+('ahorro', 1000.000, 14, 798856968, 1.000, 31),
 ('corriente', 0.000, 15, 2390668514, NULL, 32),
 ('ahorro', 0.000, 15, 7363430903, 0.000, 33),
 ('corriente', 232555.000, 16, 933285986, NULL, 34),
@@ -146,7 +153,12 @@ INSERT INTO `cuentas` (`tipo`, `saldo`, `usuario_id`, `numero`, `interes`, `id`)
 ('ahorro', 10.000, 13, 8069348955, 0.005, 36),
 ('corriente', 110.000, 17, 8996325968, NULL, 37),
 ('ahorro', 15.000, 17, 8997543081, 0.005, 38),
-('corriente', 13150.000, 18, 3010019686, NULL, 39);
+('corriente', 13150.000, 18, 3010019686, NULL, 39),
+('ahorro', 100.000, 18, 5414489286, 0.005, 40),
+('corriente', 1150.000, 19, 7088787533, NULL, 41),
+('ahorro', 0.000, 19, 2841771607, 0.005, 42),
+('corriente', 10500.000, 20, 5907074021, NULL, 43),
+('ahorro', 1500.000, 20, 8623007145, 0.005, 44);
 
 -- --------------------------------------------------------
 
@@ -198,7 +210,9 @@ INSERT INTO `usuarios` (`nombre`, `usuario`, `clave`, `cedula`, `telefono`, `id`
 ('Messi', 'Fressi', '$2a$08$Q9GMP4oxO.Dy74hpo/riYe4rExj/VllDKlCF50NLWyccCq3.09vnK', 457841, '44523524', 15),
 ('Oniel', 'Oti', '$2a$08$NaLe0SRmXEtSopKaIv55Ge8qH.wGgwoL7ukKcM/oOZzzeFhr02w6q', 486745, '01452457', 16),
 ('Miguel Angel', 'MiguelA', '$2a$08$4jWMmj6BvcQWXYzExtvjEuZwRdcfxH9Bjjskm6NciVWcC5og26aBe', 453468786, '0241564454', 17),
-('Red', 'Red', '$2a$08$fDHKw08eeuG8Cnjc8BWDDew4uu7t9TEZLbxZNmLdwIEmZOBM7dR6u', 124324234, '432423525', 18);
+('Red', 'Red', '$2a$08$fDHKw08eeuG8Cnjc8BWDDew4uu7t9TEZLbxZNmLdwIEmZOBM7dR6u', 124324234, '432423525', 18),
+('Genesis', 'Gene', '$2a$08$f4K6OzVu/Jm0wmSKxoI9EuHwVtgdP9zkjTWRmpy4O4xsuNr6.GliG', 456748653, '015458797/', 19),
+('Leonardo', 'Leo', '$2a$08$e53kThdEiVH349PRcx.8V.t63vBrLzOfvsfSI3amaEG3WGL45mab.', 466574864, '0241657', 20);
 
 --
 -- Índices para tablas volcadas
@@ -216,9 +230,10 @@ ALTER TABLE `cooperativas`
 --
 ALTER TABLE `cuentacooperativa`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `idCooperativa` (`idCooperativa`),
   ADD KEY `idCuenta` (`idCuenta`),
-  ADD KEY `idUsuario` (`idUsuario`);
+  ADD KEY `idUsuario` (`idUsuario`),
+  ADD KEY `idCooperativa_2` (`idCooperativa`),
+  ADD KEY `idCooperativa` (`idCooperativa`) USING BTREE;
 
 --
 -- Indices de la tabla `cuentaprestamo`
@@ -263,7 +278,7 @@ ALTER TABLE `cooperativas`
 -- AUTO_INCREMENT de la tabla `cuentacooperativa`
 --
 ALTER TABLE `cuentacooperativa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `cuentaprestamo`
@@ -275,7 +290,7 @@ ALTER TABLE `cuentaprestamo`
 -- AUTO_INCREMENT de la tabla `cuentas`
 --
 ALTER TABLE `cuentas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de la tabla `prestamistas`
@@ -287,7 +302,7 @@ ALTER TABLE `prestamistas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Restricciones para tablas volcadas

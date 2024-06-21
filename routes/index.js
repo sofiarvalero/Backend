@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const ControladorUsuarios = require("../Controladores/UsuariosControlador")
 const ControladorCuentas = require('../Controladores/CuentasControlador')
+const ControladorCooperativas = require('../Controladores/CooperativasControlador')
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 
@@ -37,15 +38,24 @@ router.get("/Login",function(req,res,next){
   .then((result) => {
     ControladorCuentas.ObtenerSaldoCorriente(req.cookies.jwt)
     .then((corriente) => {
-      ControladorCuentas.ObtenerSaldoAhorro(req.cookies.jwt)
-      .then((ahorro) => {
-        res.render("Login",{ usuario:result,corriente:corriente,ahorro:ahorro})
+      ControladorCooperativas.ObtenerCoopUsuario(req.cookies.jwt)
+      .then((coop) => {
+        ControladorCuentas.ObtenerSaldoAhorro(req.cookies.jwt)
+        .then((ahorro) => {
+          res.render("Login",{ usuario:result,corriente:corriente,ahorro:ahorro, coop:coop})
 
-      }).catch((e) => {
-        console.error(e)
-        res.render("Login",{ usuario:result,corriente:corriente,ahorro:null})
-
+  
+        }).catch((e) => {
+          console.error(e)
+          res.render("Login",{ usuario:result,corriente:corriente,ahorro:null,coop:coop})
+  
+        })
       })
+      .catch((e) => {
+        console.error(e)
+        res.render("Login",{ usuario:result,corriente:corriente,ahorro:null,coop:null })
+      })
+      
     })
     .catch((e) => {
       console.error(e)

@@ -34,5 +34,17 @@ class ControladorCooperativas{
             })
         })
     }
+    ObtenerCoopUsuario(idUsuario,idcoop){
+        return new Promise((resolve,reject)=>{
+            CooperativasModelos.ObtenerCoopUsuario(idUsuario,idcoop)
+            .then((result) => {
+                 resolve(result)  
+            })
+            .catch((e) => {
+                reject(e)
+             })
+        })
+        
+    }
 }
 module.exports = new ControladorCooperativas

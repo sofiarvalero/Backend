@@ -15,10 +15,18 @@
             <h3>Tu numero de Cuenta Corriente es: <%= corriente.numero %></h3>
             <% if(ahorro){ %>
                 <h2>Tu saldo de ahorro es de: <%= ahorro.saldo  %></h2>
-                <h3>Tu numero de cuetna Ahorro es : <%= ahorro.numero %></h3>
+                <h3>Tu numero de cuenta Ahorro es : <%= ahorro.numero %></h3>
                 <%  } %>
-            <p>La Cedula del titular de esta cuetna es: <%= usuario.cedula %></p>
-            <p>El telefono asociado a esta cuetna es: <%= usuario.telefono  %> </p>
+            <p>La Cedula del titular de esta cuenta es: <%= usuario.cedula %></p>
+            <p>El telefono asociado a esta cuenta es: <%= usuario.telefono  %> </p>
+            <% if(coop!=null){%>
+                <p>Eres Miembro de las cooperativas: <% coop.forEach(cooperativa => { %>
+                    <%= cooperativa.id  %>, 
+              <%  }) %> Y tus fechas de pago son los: <% coop.forEach(cooperativa => { %>
+                <%= cooperativa.fecha  %>,
+          <%  }) %>  de cada mes.</p>
+          <%  } %>
+           
         </div>
         <div>
             <form method="post" >
