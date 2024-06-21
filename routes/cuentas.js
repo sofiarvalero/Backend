@@ -4,16 +4,17 @@ const ControladorCuentas = require('../Controladores/CuentasControlador')
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 
-router.get("/",function(req,res,next){
-    ControladorCuentas.CrearCorriente(4)
+router.get("/Ahorro",function(req,res,next){
+    ControladorCuentas.CrearAhorro(req.cookies.jwt)
     .then(() => {
-        res.send("Hola")  
+        res.redirect("/Login")
     })
-    .catch((err) => {
-        res.send(err)
-    });
-})
-
+    .catch((e) => {
+        console.error(e)
+        res.redirect("/Home")
+    })
+  
+  })
 
 
 

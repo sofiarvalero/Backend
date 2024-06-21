@@ -11,9 +11,14 @@
     <div id="alinear">
         <div class="centrar fondos">
             <h1>Bienvenid@: <%= usuario.nombre %></h1>
-            <h2>Tu saldo corriente es de:1</h2>
-            <p><%= usuario.cedula %></p>
-            <p> <%= usuario.telefono  %> </p>
+            <h2>Tu saldo corriente es de: <%= corriente.saldo  %></h2>
+            <h3>Tu numero de Cuenta Corriente es: <%= corriente.numero %></h3>
+            <% if(ahorro){ %>
+                <h2>Tu saldo de ahorro es de: <%= ahorro.saldo  %></h2>
+                <h3>Tu numero de cuetna Ahorro es : <%= ahorro.numero %></h3>
+                <%  } %>
+            <p>La Cedula del titular de esta cuetna es: <%= usuario.cedula %></p>
+            <p>El telefono asociado a esta cuetna es: <%= usuario.telefono  %> </p>
         </div>
         <div>
             <form method="post" >
@@ -28,7 +33,7 @@
         
         <div id="botonesCont">
             <div class="espacio">
-                <a href="/cooperativa"><button class="boton">Ver cooperativas</button>
+                <a href="/cooperativas"><button class="boton">Ver cooperativas</button>
             </div>
             <div class="espacio">
                 <a href="/logout"><button class="boton">Cerrar Sesion</button></a>
@@ -37,7 +42,7 @@
                 <a href="/prestamos"><button class="boton">Ver Prestamos</button></a>
             </div>
             <div>
-                <a href="/cuentaAhorro"><button class="boton">Crear Cuenta de ahorro</button></a>
+                <a href="/cuenta/Ahorro"><button class="boton">Crear Cuenta de ahorro</button></a>
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-06-2024 a las 17:47:23
+-- Tiempo de generación: 21-06-2024 a las 17:44:22
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -28,32 +28,60 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cooperativas` (
-  `montoTotal` decimal(10,0) NOT NULL,
-  `fechaPago` date NOT NULL,
-  `depositoMensual` decimal(10,0) NOT NULL,
+  `montoTotal` float(10,3) NOT NULL,
+  `fechaPago` varchar(10) NOT NULL,
+  `depositoMensual` decimal(10,3) NOT NULL,
+  `usuarioResponsable` varchar(15) NOT NULL,
+  `duracion` varchar(18) NOT NULL,
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cooperativas`
+--
+
+INSERT INTO `cooperativas` (`montoTotal`, `fechaPago`, `depositoMensual`, `usuarioResponsable`, `duracion`, `id`) VALUES
+(1000.000, '2001-10-01', 10.000, '0', '', 1),
+(12000.000, '12', 120.000, 'Lai', '', 2),
+(150.000, '1', 1.000, 'Rafael048', '', 3),
+(1000.000, '1', 14.000, 'Juans', '', 5),
+(178313.000, '2', 123.000, 'Ali', '', 6),
+(2189372.000, '3', 152.000, 'Yisus', '', 7),
+(53242.000, '1', 1231.000, 'Kev', '', 8);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cuenta-cooperativa`
+-- Estructura de tabla para la tabla `cuentacooperativa`
 --
 
-CREATE TABLE `cuenta-cooperativa` (
+CREATE TABLE `cuentacooperativa` (
   `idCuenta` int(11) NOT NULL,
   `idCooperativa` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL,
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `cuentacooperativa`
+--
+
+INSERT INTO `cuentacooperativa` (`idCuenta`, `idCooperativa`, `idUsuario`, `id`) VALUES
+(34, 7, 16, 1),
+(34, 8, 16, 2),
+(34, 5, 16, 3),
+(34, 6, 16, 5),
+(39, 2, 18, 8),
+(39, 1, 18, 9),
+(39, 3, 18, 11);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `cuenta-prestamo`
+-- Estructura de tabla para la tabla `cuentaprestamo`
 --
 
-CREATE TABLE `cuenta-prestamo` (
+CREATE TABLE `cuentaprestamo` (
   `idCuenta` int(11) NOT NULL,
   `idPrestamista` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL,
@@ -68,10 +96,10 @@ CREATE TABLE `cuenta-prestamo` (
 
 CREATE TABLE `cuentas` (
   `tipo` varchar(18) NOT NULL,
-  `saldo` decimal(10,0) NOT NULL,
+  `saldo` float(10,3) NOT NULL,
   `usuario_id` int(11) NOT NULL,
   `numero` bigint(25) NOT NULL,
-  `interes` decimal(11,0) DEFAULT NULL,
+  `interes` float(11,3) DEFAULT NULL,
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -80,29 +108,45 @@ CREATE TABLE `cuentas` (
 --
 
 INSERT INTO `cuentas` (`tipo`, `saldo`, `usuario_id`, `numero`, `interes`, `id`) VALUES
-('corriente', 0, 2, 2147483647, NULL, 1),
-('corriente', 0, 2, 2147483647, NULL, 2),
-('corriente', 0, 4, 2147483647, NULL, 3),
-('corriente', 0, 4, 2147483647, NULL, 4),
-('corriente', 0, 4, 2147483647, NULL, 5),
-('corriente', 0, 4, 682683799, NULL, 6),
-('corriente', 0, 4, 91616362, NULL, 7),
-('corriente', 0, 4, 2147483647, NULL, 8),
-('corriente', 0, 4, 2147483647, NULL, 9),
-('corriente', 0, 4, 2147483647, NULL, 10),
-('corriente', 0, 4, 2147483647, NULL, 11),
-('corriente', 0, 4, 559980487, NULL, 12),
-('corriente', 0, 4, 1158605353, NULL, 13),
-('corriente', 0, 4, 2147483647, NULL, 14),
-('corriente', 0, 4, 2147483647, NULL, 15),
-('corriente', 0, 4, 2147483647, NULL, 16),
-('corriente', 0, 4, 2147483647, NULL, 17),
-('corriente', 0, 4, 2147483647, NULL, 18),
-('corriente', 0, 4, 4359813645, NULL, 19),
-('corriente', 0, 4, 1085372083, NULL, 20),
-('corriente', 0, 4, 2774939090, NULL, 21),
-('corriente', 0, 11, 4465987915, NULL, 22),
-('corriente', 0, 12, 5874479791, NULL, 23);
+('corriente', 0.000, 2, 2147483647, NULL, 1),
+('corriente', 0.000, 2, 2147483647, NULL, 2),
+('corriente', 50.000, 4, 2147483647, NULL, 3),
+('corriente', 50.000, 4, 2147483647, NULL, 4),
+('corriente', 50.000, 4, 2147483647, NULL, 5),
+('corriente', 50.000, 4, 682683799, NULL, 6),
+('corriente', 50.000, 4, 91616362, NULL, 7),
+('corriente', 50.000, 4, 2147483647, NULL, 8),
+('corriente', 50.000, 4, 2147483647, NULL, 9),
+('corriente', 50.000, 4, 2147483647, NULL, 10),
+('corriente', 50.000, 4, 2147483647, NULL, 11),
+('corriente', 50.000, 4, 559980487, NULL, 12),
+('corriente', 50.000, 4, 1158605353, NULL, 13),
+('corriente', 50.000, 4, 2147483647, NULL, 14),
+('corriente', 50.000, 4, 2147483647, NULL, 15),
+('corriente', 50.000, 4, 2147483647, NULL, 16),
+('corriente', 50.000, 4, 2147483647, NULL, 17),
+('corriente', 50.000, 4, 2147483647, NULL, 18),
+('corriente', 50.000, 4, 4359813645, NULL, 19),
+('corriente', 50.000, 4, 1085372083, NULL, 20),
+('corriente', 50.000, 4, 2774939090, NULL, 21),
+('corriente', 0.000, 11, 4465987915, NULL, 22),
+('corriente', 0.000, 12, 5874479791, NULL, 23),
+('corriente', 5.000, 13, 8519678483, NULL, 24),
+('ahorro', 10.000, 4, 1039087439, 0.000, 25),
+('ahorro', 10.000, 4, 6053274263, 0.000, 26),
+('ahorro', 10.000, 4, 9982021016, 1.000, 27),
+('ahorro', 10.000, 4, 5050263380, 0.000, 28),
+('ahorro', 10.000, 4, 8409821707, 1.000, 29),
+('corriente', 0.000, 14, 6623871212, NULL, 30),
+('ahorro', 0.000, 14, 798856968, 1.000, 31),
+('corriente', 0.000, 15, 2390668514, NULL, 32),
+('ahorro', 0.000, 15, 7363430903, 0.000, 33),
+('corriente', 232555.000, 16, 933285986, NULL, 34),
+('ahorro', 20.000, 16, 9197819578, 0.005, 35),
+('ahorro', 10.000, 13, 8069348955, 0.005, 36),
+('corriente', 110.000, 17, 8996325968, NULL, 37),
+('ahorro', 15.000, 17, 8997543081, 0.005, 38),
+('corriente', 13150.000, 18, 3010019686, NULL, 39);
 
 -- --------------------------------------------------------
 
@@ -148,7 +192,13 @@ INSERT INTO `usuarios` (`nombre`, `usuario`, `clave`, `cedula`, `telefono`, `id`
 ('Jesus', 'Chucho', '$2a$08$ajZl3KQi1/1cIxOtU9WB3OANZ672O223XGtNr88wmxMDuSRtCDiP2', 12432423, '23131', 9),
 ('Michael', 'Sus123', '$2a$08$3abCJ5j4ZWWJavgZGYIN9.Az8orR7Yc5LUQ93HqXQzYO13tvo3Kka', 122321, '241241', 10),
 ('Michael', 'Mike', '$2a$08$RkO5Kb/LBd3nL1U.NxWjHuVJuHMeJwIK1VGXnTgIHsAYIWlI.1a3W', 1343154, '124431', 11),
-('Lionel', 'Messi012', '$2a$08$nhw3KAau7Hi.fYLnP7ruS.kHDtwPJd0NfCQawTY/k/e4zyL12lCfi', 6987561, '04121748351', 12);
+('Lionel', 'Messi012', '$2a$08$nhw3KAau7Hi.fYLnP7ruS.kHDtwPJd0NfCQawTY/k/e4zyL12lCfi', 6987561, '04121748351', 12),
+('Juan Torres', 'Juans', '$2a$08$nOjATFsQuKTpf4YXZwDQJe36AUKp5BoRq.ExV8Pke1EJVfqUjEP16', 5787545, '014245645', 13),
+('Alirio', 'Ali', '$2a$08$lwngbkPgF5EOP40V5D.9TOzxIWEUtlvyE4mbbjMFkG8rGZvIPCDCW', 5748955, '04126986458', 14),
+('Messi', 'Fressi', '$2a$08$Q9GMP4oxO.Dy74hpo/riYe4rExj/VllDKlCF50NLWyccCq3.09vnK', 457841, '44523524', 15),
+('Oniel', 'Oti', '$2a$08$NaLe0SRmXEtSopKaIv55Ge8qH.wGgwoL7ukKcM/oOZzzeFhr02w6q', 486745, '01452457', 16),
+('Miguel Angel', 'MiguelA', '$2a$08$4jWMmj6BvcQWXYzExtvjEuZwRdcfxH9Bjjskm6NciVWcC5og26aBe', 453468786, '0241564454', 17),
+('Red', 'Red', '$2a$08$fDHKw08eeuG8Cnjc8BWDDew4uu7t9TEZLbxZNmLdwIEmZOBM7dR6u', 124324234, '432423525', 18);
 
 --
 -- Índices para tablas volcadas
@@ -158,21 +208,22 @@ INSERT INTO `usuarios` (`nombre`, `usuario`, `clave`, `cedula`, `telefono`, `id`
 -- Indices de la tabla `cooperativas`
 --
 ALTER TABLE `cooperativas`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `usuarioResponsable` (`usuarioResponsable`);
 
 --
--- Indices de la tabla `cuenta-cooperativa`
+-- Indices de la tabla `cuentacooperativa`
 --
-ALTER TABLE `cuenta-cooperativa`
+ALTER TABLE `cuentacooperativa`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `idCooperativa` (`idCooperativa`),
   ADD KEY `idCuenta` (`idCuenta`),
   ADD KEY `idUsuario` (`idUsuario`);
 
 --
--- Indices de la tabla `cuenta-prestamo`
+-- Indices de la tabla `cuentaprestamo`
 --
-ALTER TABLE `cuenta-prestamo`
+ALTER TABLE `cuentaprestamo`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idCuenta` (`idCuenta`),
   ADD KEY `idPrestamista` (`idPrestamista`),
@@ -206,25 +257,25 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cooperativas`
 --
 ALTER TABLE `cooperativas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla `cuenta-cooperativa`
+-- AUTO_INCREMENT de la tabla `cuentacooperativa`
 --
-ALTER TABLE `cuenta-cooperativa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cuentacooperativa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT de la tabla `cuenta-prestamo`
+-- AUTO_INCREMENT de la tabla `cuentaprestamo`
 --
-ALTER TABLE `cuenta-prestamo`
+ALTER TABLE `cuentaprestamo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `cuentas`
 --
 ALTER TABLE `cuentas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de la tabla `prestamistas`
@@ -236,27 +287,27 @@ ALTER TABLE `prestamistas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `cuenta-cooperativa`
+-- Filtros para la tabla `cuentacooperativa`
 --
-ALTER TABLE `cuenta-cooperativa`
-  ADD CONSTRAINT `cuenta-cooperativa_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `cuenta-cooperativa_ibfk_2` FOREIGN KEY (`idCuenta`) REFERENCES `cuentas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `cuenta-cooperativa_ibfk_3` FOREIGN KEY (`idCooperativa`) REFERENCES `cooperativas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `cuentacooperativa`
+  ADD CONSTRAINT `cuentacooperativa_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cuentacooperativa_ibfk_2` FOREIGN KEY (`idCuenta`) REFERENCES `cuentas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cuentacooperativa_ibfk_3` FOREIGN KEY (`idCooperativa`) REFERENCES `cooperativas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `cuenta-prestamo`
+-- Filtros para la tabla `cuentaprestamo`
 --
-ALTER TABLE `cuenta-prestamo`
-  ADD CONSTRAINT `cuenta-prestamo_ibfk_1` FOREIGN KEY (`idCuenta`) REFERENCES `cuentas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `cuenta-prestamo_ibfk_2` FOREIGN KEY (`idPrestamista`) REFERENCES `prestamistas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `cuenta-prestamo_ibfk_3` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `cuentaprestamo`
+  ADD CONSTRAINT `cuentaprestamo_ibfk_1` FOREIGN KEY (`idCuenta`) REFERENCES `cuentas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cuentaprestamo_ibfk_2` FOREIGN KEY (`idPrestamista`) REFERENCES `prestamistas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cuentaprestamo_ibfk_3` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cuentas`

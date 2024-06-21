@@ -1,5 +1,4 @@
-let cooperativas = require("../cooperativas")
-let prestamos = require("../cuentasPrestamo")
+
 const ControladorCuentas = require('../Controladores/CuentasControlador')
 const conexion = require("../conexionBD")
 const bcryptjs = require('bcryptjs')
@@ -71,16 +70,7 @@ class ModeloUsuarios {
       })
       
       }
-      AgregarCooperativa(id){
-        
-        for(let i =0;i<cooperativas.length;i++){
-          if(cooperativas[i].id==id){
-            cooperativas[i].usuarios.push(usuarioAunt.nombre)
-            usuarioAunt.cooperativas.push("Eres parte de la cooperativa numero "+Number(id)+ " Y tus dias de pago son los " + cooperativas[i].fechaPago)
-
-          }
-        }
-      }
+     
     
     ModificarUsuario(datos){
       let nuevoNombre = datos.nuevoNombre
@@ -107,7 +97,28 @@ class ModeloUsuarios {
       arrayUsers.splice(id,1)
       return arrayUsers
     }
+    Verificar(cookie){
+      return new Promise((resolve,reject)=>{
+        if(cookie){
+          let decodificado = jwt.decode(cookie,process.env.JWT_FIRMA)
+          let query = `SELECT * FROM usuarios WHERE id=${decodificado.id}`
+          conexion.query(query,function(err,result){
+            if(err){
+              reject(err)
+            }else{
+              if(result.length===0){
+                reject(new Error("No existe el usuario"))
+              }else{
+                resolve(decodificado)
+              }
+            }
+          })
+
+        }
+      })
     }
+    }
+    
   
 
 
