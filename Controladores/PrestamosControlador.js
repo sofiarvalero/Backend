@@ -45,5 +45,27 @@ class ControladorPrestamos{
             })
         })
     }
+    Eliminar(id){
+        return new Promise((resolve,reject)=>{
+            PrestamosModelos.Eliminar(id)
+            .then(() => {
+              resolve()  
+            })
+            .catch((e) => {
+                reject(e)
+            })
+        })
+    }
+    Editar(id,datos){
+        return new Promise((resolve, reject) => {
+            PrestamosModelos.Editar(id,datos)
+            .then(() => {
+                resolve()
+            })
+            .catch((e) => {
+               reject(e) 
+            });
+        })
+    }
 }
 module.exports = new ControladorPrestamos

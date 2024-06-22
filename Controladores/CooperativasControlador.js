@@ -46,5 +46,27 @@ class ControladorCooperativas{
         })
         
     }
+    Eliminar(id){
+        return new Promise((resolve,reject)=>{
+            CooperativasModelos.Eliminar(id)
+            .then(() => {
+              resolve()  
+            })
+            .catch((e) => {
+                reject(e)
+            })
+        })
+    }
+    Editar(id,datos){
+        return new Promise((resolve, reject) => {
+            CooperativasModelos.Editar(id,datos)
+            .then(() => {
+                resolve()
+            })
+            .catch((e) => {
+               reject(e) 
+            });
+        })
+    }
 }
 module.exports = new ControladorCooperativas

@@ -110,5 +110,33 @@ class PrestamosModelos{
                 })
             })
         }
+        Eliminar(id){
+            return new Promise((resolve, reject) => {
+                let query = `DELETE FROM prestamistas WHERE id = ${id} `
+                conexion.query(query, function(err, result){
+                    if(err){
+                        reject(err)
+                    }else{
+                        resolve()
+                    }
+                })
+            })
+        }
+        Editar(id,datos){
+            return new Promise((resolve, reject) => {
+                let prestamo = datos.prestamo
+                let fecha = datos.fechaPago
+                let interes = datos.interes
+                let usuario = datos.responsable
+                let query = `UPDATE prestamistas SET prestamo = '${prestamo}', fechaPagos = '${fecha}', interes = '${interes}', usuarioResponsable = '${usuario}' WHERE id = ${id} `
+                conexion.query(query, function(err, result){
+                    if(err){
+                        reject(err)
+                    }else{
+                        resolve()
+                    }
+                })        
+            })
+    }
 }
 module.exports =  new PrestamosModelos

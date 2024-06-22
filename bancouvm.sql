@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-06-2024 a las 03:50:34
+-- Tiempo de generación: 22-06-2024 a las 19:21:59
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -41,12 +41,9 @@ CREATE TABLE `cooperativas` (
 --
 
 INSERT INTO `cooperativas` (`montoTotal`, `fechaPago`, `depositoMensual`, `usuarioResponsable`, `duracion`, `id`) VALUES
-(1000.000, '2001-10-01', 10.000, '0', '', 1),
 (12000.000, '12', 120.000, 'Lai', '', 2),
-(150.000, '1', 1.000, 'Rafael048', '', 3),
-(1000.000, '1', 14.000, 'Juans', '', 5),
+(1500.000, '3', 15.000, 'Mary', '15', 5),
 (178313.000, '2', 123.000, 'Ali', '', 6),
-(2189372.000, '3', 152.000, 'Yisus', '', 7),
 (53242.000, '1', 1231.000, 'Kev', '', 8);
 
 -- --------------------------------------------------------
@@ -67,19 +64,13 @@ CREATE TABLE `cuentacooperativa` (
 --
 
 INSERT INTO `cuentacooperativa` (`idCuenta`, `idCooperativa`, `idUsuario`, `id`) VALUES
-(34, 7, 16, 1),
 (34, 8, 16, 2),
 (34, 5, 16, 3),
 (34, 6, 16, 5),
 (39, 2, 18, 8),
-(39, 1, 18, 9),
-(39, 3, 18, 11),
-(30, 1, 14, 16),
 (30, 8, 14, 17),
 (30, 8, 14, 18),
 (30, 2, 14, 19),
-(41, 3, 19, 20),
-(41, 1, 19, 21),
 (43, 2, 20, 22),
 (45, 2, 21, 23);
 
@@ -101,9 +92,9 @@ CREATE TABLE `cuentaprestamo` (
 --
 
 INSERT INTO `cuentaprestamo` (`idCuenta`, `idPrestamista`, `idUsuario`, `id`) VALUES
-(43, 2, 20, 1),
 (43, 1, 20, 2),
-(45, 1, 21, 3);
+(45, 1, 21, 3),
+(34, 1, 16, 4);
 
 -- --------------------------------------------------------
 
@@ -158,7 +149,7 @@ INSERT INTO `cuentas` (`tipo`, `saldo`, `usuario_id`, `numero`, `interes`, `id`)
 ('ahorro', 1000.000, 14, 798856968, 1.000, 31),
 ('corriente', 0.000, 15, 2390668514, NULL, 32),
 ('ahorro', 0.000, 15, 7363430903, 0.000, 33),
-('corriente', 232555.000, 16, 933285986, NULL, 34),
+('corriente', 233555.000, 16, 933285986, NULL, 34),
 ('ahorro', 20.000, 16, 9197819578, 0.005, 35),
 ('ahorro', 10.000, 13, 8069348955, 0.005, 36),
 ('corriente', 110.000, 17, 8996325968, NULL, 37),
@@ -191,8 +182,7 @@ CREATE TABLE `prestamistas` (
 --
 
 INSERT INTO `prestamistas` (`prestamo`, `fechaPagos`, `interes`, `usuarioResponsable`, `id`) VALUES
-(1000.000, '0000-00-00', 1.000, 'Lai', 1),
-(15000.000, '10', 0.500, 'Rafael048', 2);
+(15000.000, '1', 0.500, 'Messi', 1);
 
 -- --------------------------------------------------------
 
@@ -307,7 +297,7 @@ ALTER TABLE `cuentacooperativa`
 -- AUTO_INCREMENT de la tabla `cuentaprestamo`
 --
 ALTER TABLE `cuentaprestamo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `cuentas`

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <form >
+        <input  type="input" placeholder="Monto De La cooperativa" name="montoTotal" required>
+        <input  type="input" placeholder="Fecha Del Pago" name="fechaPago" required>
+        <input  type="input" placeholder="Pagos Mensuales" name="depositoMensual"  required>
+        <input  type="input" placeholder="Usuario Responsable" name="responsable" required>
+        <input  type="input" placeholder="Duracion de la cooperativa" name="duracion" required>
+        <input type="hidden" name="id" value="<%= id  %>">
+        <input type="submit" value="Agregar" class="boton">
+    </form>
+      <a href="/Login"><button class="boton">Volver</button></a>
+      <script>
+        let form = document.querySelector('form')
+       
+        form.addEventListener("submit",function(e){
+            e.preventDefault()
+            console.log("EventListener")
+            let monto = form.montoTotal.value
+            let fecha = form.fechaPago.value
+            let pagos = form.depositoMensual.value
+            let responsable = form.responsable.value
+            let duracion = form.duracion.value
+            let id = form.id.value
+            console.log(id)
+            let datosBody = {
+                monto:monto,
+                fechaPago:fecha,
+                depositoMensual:pagos,
+                responsable:responsable,
+                duracion:duracion
+            }
+            fetch(`/cooperativas/editar/${id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(datosBody)})
+            .then(() => {
+                window.location.href="/cooperativas"
+            }).catch((err) => {
+                console.error(e)
+                window.location.href="/Login"
+
+            });
+        })
+      </script>
+</body>
+</html>

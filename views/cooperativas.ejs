@@ -19,13 +19,47 @@
                
                 <form method="post">
                     <input type="hidden" value="<%= cooperativa.id  %>"  name="id">
-                    <input type="submit" value="Unirme a esta cooperativa">
+                    <input type="submit"class="boton" value="Unirme a esta cooperativa">
                 </form>
+                <button class="boton Eliminar" name="<%= cooperativa.id %>">Borrar cooperativa</button>
+                <button class="boton Editar" name="<%= cooperativa.id %>">Editar Esta cooperativa</button>
             </div>
       <%  }); %>
     </div>
     <a href="/Login"><button class="boton">Volver</button></a>
 
-  
+    <script>
+            let eliminar = document.getElementsByClassName("Eliminar")
+            console.log(eliminar)
+            for(let i = 0;i<eliminar.length;i++){
+                eliminar[i].addEventListener("click", function(){
+                let id = eliminar[i].name
+                fetch('/cooperativas/eliminar', {method: 'DELETE',headers:{'Content-Type':'application/json'},body: JSON.stringify({id:id})})
+                .then(()=>{
+                      window.location.href="/cooperativas"
+                 })
+                  .catch((e)=>{
+                     console.log(e)
+                     window.location.href="/Login"
+                })
+                })
+            }
+            let editar = document.getElementsByClassName("Editar")
+            for(let i = 0;i<editar.length;i++){
+                editar[i].addEventListener("click", function(){
+                let id = eliminar[i].name
+                fetch(`/cooperativas/editar/${id}`, {method: 'GET',headers:{'Content-Type':'application/json'}})
+                .then(()=>{
+                      window.location.href=`/cooperativas/editar/${id}`
+                 })
+                  .catch((e)=>{
+                     console.log(e)
+                     window.location.href="/Login"
+                })
+                })
+            }
+                
+             
+    </script>
 </body>
 </html>

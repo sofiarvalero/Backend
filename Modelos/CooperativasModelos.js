@@ -111,5 +111,34 @@ class CooperativasModelos{
             })
         })
     }
+    Eliminar(id){
+        return new Promise((resolve, reject) => {
+            let query = `DELETE FROM cooperativas WHERE id = ${id} `
+            conexion.query(query, function(err, result){
+                if(err){
+                    reject(err)
+                }else{
+                    resolve()
+                }
+            })
+        })
+    }
+    Editar(id,datos){
+        return new Promise((resolve, reject) => {
+            let monto = datos.monto
+            let fecha = datos.fechaPago
+            let pago = datos.depositoMensual
+            let duracion = datos.duracion
+            let usuario = datos.responsable
+            let query = `UPDATE cooperativas SET montoTotal = '${monto}', fechaPago = '${fecha}', depositoMensual = '${pago}', duracion = '${duracion}', usuarioResponsable = '${usuario}' WHERE id = ${id} `
+            conexion.query(query, function(err, result){
+                if(err){
+                    reject(err)
+                }else{
+                    resolve()
+                }
+            })        
+        })
+    }
 }
 module.exports = new CooperativasModelos

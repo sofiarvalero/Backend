@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <form >
+        <input  type="input" placeholder="Cantidad de Prestamo" name="prestamo" required>
+        <input  type="input" placeholder="Fecha Del Pago" name="fechaPago" required>
+        <input  type="input" placeholder="Cantidad de Interes" name="interes"  required>
+        <input  type="input" placeholder="Usuario Responsable" name="responsable" required>
+        <input type="hidden" name="id" value="<%= id  %>">
+        <input type="submit" value="Agregar" class="boton">
+    </form>
+      <a href="/Login"><button class="boton">Volver</button></a>
+      <script>
+        let form = document.querySelector('form')
+       
+        form.addEventListener("submit",function(e){
+            e.preventDefault()
+            console.log("EventListener")
+            let prestamo = form.prestamo.value
+            let fecha = form.fechaPago.value
+            let interes = form.interes.value
+            let responsable = form.responsable.value
+            let id = form.id.value
+            console.log(id)
+            let datosBody = {
+                prestamo:prestamo,
+                fechaPago:fecha,
+                interes:interes,
+                responsable:responsable
+            }
+            fetch(`/prestamos/editar/${id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(datosBody)})
+            .then(() => {
+                window.location.href="/prestamos"
+            }).catch((err) => {
+                console.error(e)
+                window.location.href="/Login"
+
+            });
+        })
+      </script>
+</body>
+</html>

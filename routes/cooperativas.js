@@ -38,4 +38,28 @@ router.post("/agregarCooperativa",function(req,res,next){
         res.redirect("/cooperativas")
     })
 })
+router.delete("/eliminar",function(req,res,next){
+    ControladorCooperativas.Eliminar(req.body.id)
+    .then(() => {
+        res.redirect("/cooperativas")
+    })
+    .catch((e) => {
+      console.error(e)
+      res.redirect("/Login")  
+    })
+})
+router.get("/editar/:id",function(req,res,next){
+    res.render("editarCoop", {id:req.params.id})
+})
+router.put("/editar/:id",function(req,res,next){
+    ControladorCooperativas.Editar(req.params.id,req.body)
+    .then(() => {
+        res.redirect("/cooperativas")
+    })
+    .catch((e) => {
+        console.log(e)
+        res.redirect("Login")
+    });
+})
+
 module.exports = router;

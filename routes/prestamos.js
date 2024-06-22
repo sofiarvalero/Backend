@@ -37,5 +37,28 @@ router.post("/", function(req,res,next){
       res.redirect("/Login")  
     })
 })
+router.delete("/eliminar",function(req,res,next){
+    ControladorPrestamos.Eliminar(req.body.id)
+    .then(() => {
+        res.redirect("/prestamos")
+    })
+    .catch((e) => {
+      console.error(e)
+      res.redirect("/Login")  
+    })
+})
+router.get("/editar/:id",function(req,res,next){
+    res.render("editarPrestamo", {id:req.params.id})
+})
+router.put("/editar/:id",function(req,res,next){
+    ControladorPrestamos.Editar(req.params.id,req.body)
+    .then(() => {
+        res.redirect("/prestamos")
+    })
+    .catch((e) => {
+        console.log(e)
+        res.redirect("Login")
+    });
+})
 
 module.exports = router;
