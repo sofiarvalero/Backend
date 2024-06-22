@@ -15,6 +15,27 @@ router.get("/Ahorro",function(req,res,next){
     })
   
   })
+  router.delete("/eliminarCorriente/:id",function(req,res,next){
+    ControladorCuentas.EliminarCorriente(req.params.id)
+    .then(() => {
+        res.send("Cuenta eliminada")
+    }).catch((err) => {
+        console.error(err)
+        res.send("Algo Fallo")
+        
+    });
+  })
+  router.delete("/eliminarAhorro/:id",function(req,res,next){
+    ControladorCuentas.EliminarAhorro(req.params.id)
+    .then(() => {
+        res.send("Cuenta Ahorro eliminado")
+    }).catch((err) => {
+        console.error(err)
+        res.send("Algo Fallo")
+        
+    });
+  })
+
 
 
 

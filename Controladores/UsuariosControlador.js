@@ -1,3 +1,4 @@
+const UsuariosModelos = require("../Modelos/UsuariosModelos")
 let usuariosModelos = require("../Modelos/UsuariosModelos")
 
 class ControladorUsuarios{
@@ -41,6 +42,28 @@ class ControladorUsuarios{
                 resolve(result)
             }).catch((e) => {
                 reject(e)
+            });
+        })
+    }
+    Modificar(token,datos){
+        return new Promise((resolve, reject) => {
+            UsuariosModelos.Modificar(token,datos)
+            .then((result) => {
+                resolve(result)
+            })
+            .catch((e) => {
+                reject(e)    
+            });
+        })
+    }
+    Eliminar(id){
+        return new Promise((resolve, reject) => {
+            UsuariosModelos.Eliminar(id)
+            .then(() => {
+                resolve()
+            })
+            .catch((e) => {
+                reject(e)    
             });
         })
     }

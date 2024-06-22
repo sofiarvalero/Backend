@@ -4,7 +4,8 @@ const ControladorUsuarios = require("../Controladores/UsuariosControlador")
 const ControladorCuentas = require('../Controladores/CuentasControlador')
 const ControladorCooperativas = require('../Controladores/CooperativasControlador')
 const ControladorPrestamos = require('../Controladores/PrestamosControlador')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const e = require('express');
 require('dotenv').config();
 
 router.get("/Home", function(req,res,next){
@@ -86,19 +87,29 @@ ControladorCuentas.AgregarSaldo(req.body,req.cookies.jwt)
 
 })
 
-router.put("/editarUsuario",function(req,res,next){
-  let user = ControladorUsuarios.ModificarUsuario(req.body)
-  res.send(user)
+router.put("/editarUsuario/:id",function(req,res,next){
+  ControladorUsuarios.Modificar(req.params.id,req.body)
+  .then((result) => {
+    res.send(result)
+  })
+  .catch((e) => {
+    console.error(e)
+  });
 })
 router.get("/logout",function(req,res,next){
-  ControladorUsuarios.Logout(req.cookies.jwt)
+  ControladorUsuarios.Logout(req.cookies.jwt,req.body)
   res.clearCookie("jwt")
   res.redirect("Home")
 })
 
-router.delete("/usuario/:id",function(req,res,next){
-  let usuario = ControladorUsuarios.EliminarUsuario(req.params.id)
-  res.send(usuario)
+router.delete("/eliminarUsuario/:id",function(req,res,next){
+  ControladorUsuarios.Eliminar(req.params.id)
+  .then(() => {
+    res.send("Usuario Eliminado")
+  })
+  .catch((e) => {
+    console.error(e)
+  })
 })
 
 module.exports = router;

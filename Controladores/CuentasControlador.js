@@ -55,6 +55,28 @@ class ControladorCuentas{
             })
         })
     }
+    EliminarCorriente(id){
+        return new Promise((resolve, reject) => {
+            CuentasModelos.EliminarCorriente(id)
+            .then(() => {
+                resolve()
+            })
+            .catch((e) => {
+                reject(e)    
+            });
+        })
+    }
+    EliminarAhorro(id){
+        return new Promise((resolve, reject) => {
+            CuentasModelos.EliminarAhorro(id)
+            .then(() => {
+                resolve()
+            })
+            .catch((e) => {
+                reject(e)    
+            });
+        })
+    }
 }
 
 module.exports = new ControladorCuentas

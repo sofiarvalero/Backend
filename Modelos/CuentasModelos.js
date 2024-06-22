@@ -122,6 +122,30 @@ const jwt = require('jsonwebtoken')
                 }
             })
         }
+        EliminarCorriente(id){
+            return new Promise((resolve, reject) => {
+              let query = `DELETE FROM cuentas WHERE id = ${id} AND tipo = 'corriente'`
+              conexion.query(query,function(err,result){
+                if(err){
+                  reject(err)
+                }else{
+                  resolve()
+                }
+              })
+            })
+         }
+         EliminarAhorro(id){
+            return new Promise((resolve, reject) => {
+              let query = `DELETE FROM cuentas WHERE id = ${id} AND tipo = 'ahorro'`
+              conexion.query(query,function(err,result){
+                if(err){
+                  reject(err)
+                }else{
+                  resolve()
+                }
+              })
+            }) 
+        } 
     }
 
 module.exports = new CuentasModelos

@@ -72,14 +72,18 @@ class ModeloUsuarios {
       }
      
     
-    ModificarUsuario(datos){
-      let nuevoNombre = datos.nuevoNombre
-      let nuevoClave = datos.nuevaClave
-      let nuevoUsuario = datos.nuevoUsuario
-      usuarioAunt.nombre = nuevoNombre
-      usuarioAunt.clave = nuevoClave
-      usuarioAunt.userName= nuevoUsuario
-      return usuarioAunt
+    Modificar(usuarioid,datos){
+      return new Promise(async(resolve, reject) => {
+        let claveCodificada =  await bcryptjs.hash(datos.clave,8)
+        let query = `UPDATE usuarios SET nombre = '${datos.nombre}', usuario = '${datos.usuario}',clave = '${claveCodificada}', telefono = '${datos.telefono}',cedula = '${datos.cedula}' WHERE id = '${usuarioid}'`
+        conexion.query(query,function(err,result){
+          if(err){
+            reject(err)
+          }else{
+            resolve(result)
+          }
+        })
+      })
     }
    
    
@@ -93,9 +97,18 @@ class ModeloUsuarios {
       })
     }
    
-    EliminarUsuario(id){
-      arrayUsers.splice(id,1)
-      return arrayUsers
+    Eliminar(id){
+      return new Promise((resolve, reject) => {
+        let query = `DELETE FROM usuarios WHERE id = ${id}`
+        conexion.query(query,function(err,result){
+          if(err){
+            reject(err)
+          }else{
+            resolve()
+          }
+        })
+      })
+
     }
     Verificar(cookie){
       return new Promise((resolve,reject)=>{
@@ -117,7 +130,7 @@ class ModeloUsuarios {
         }
       })
     }
-    }
+   }
     
   
 
