@@ -1,20 +1,20 @@
-const CooperativasModelos = require('../Modelos/CooperativasModelos')
+const PrestamosModelos = require("../Modelos/PrestamosModelos")
 
-class ControladorCooperativas{
+class ControladorPrestamos{
     Obtener(){
         return new Promise((resolve,reject)=>{
-            CooperativasModelos.Obtener()
-            .then((cooperativas) => {
-                resolve(cooperativas)
+            PrestamosModelos.Obtener()
+            .then((result) => {
+                resolve(result)
             })
             .catch((e) => {
-                reject(e)    
-            })
+                reject(e)
+            });
         })
     }
     Agregar(datos){
         return new Promise((resolve,reject)=>{
-            CooperativasModelos.Agregar(datos)
+            PrestamosModelos.Agregar(datos)
             .then((result) => {
                 resolve(result)
             })
@@ -22,10 +22,10 @@ class ControladorCooperativas{
               reject(e)  
             })
         })
-    }
-    Unirse(ID,datos){
+     }
+     Unirse(ID,datos){
         return new Promise((resolve,reject)=>{
-            CooperativasModelos.Unirse(ID,datos)
+            PrestamosModelos.Unirse(ID,datos)
             .then(() => {
                 resolve()
             })
@@ -34,17 +34,16 @@ class ControladorCooperativas{
             })
         })
     }
-    ObtenerCoopUsuario(idUsuario){
+    ObtenerPrestamoUsuario(datos){
         return new Promise((resolve,reject)=>{
-            CooperativasModelos.ObtenerCoopUsuario(idUsuario)
+            PrestamosModelos.ObtenerPrestamoUsuario(datos)
             .then((result) => {
-                 resolve(result)  
+                resolve(result)
             })
             .catch((e) => {
-                reject(e)
-             })
+              reject(e)  
+            })
         })
-        
     }
 }
-module.exports = new ControladorCooperativas
+module.exports = new ControladorPrestamos

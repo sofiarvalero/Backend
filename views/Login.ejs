@@ -19,14 +19,22 @@
                 <%  } %>
             <p>La Cedula del titular de esta cuenta es: <%= usuario.cedula %></p>
             <p>El telefono asociado a esta cuenta es: <%= usuario.telefono  %> </p>
-            <% if(coop!=null){%>
+            <% if(coop[0].id){%>
                 <p>Eres Miembro de las cooperativas: <% coop.forEach(cooperativa => { %>
                     <%= cooperativa.id  %>, 
               <%  }) %> Y tus fechas de pago son los: <% coop.forEach(cooperativa => { %>
                 <%= cooperativa.fecha  %>,
           <%  }) %>  de cada mes.</p>
           <%  } %>
-           
+           <% if(prestamo[0].id){ %>
+            <p>Haz solicitado los prestamos: <% prestamo.forEach(prestamo => { %>
+                <%= prestamo.id  %>, 
+          <%  }) %> Y tus fechas de pago son los: <% prestamo.forEach(prestamo => { %>
+            <%= prestamo.fecha  %>,
+      <%  }) %>  de cada mes. Con un interes de: <% prestamo.forEach(prestamo=>{%>
+        <%= prestamo.interes %>
+    <%  })%></p>
+      <%  } %>
         </div>
         <div>
             <form method="post" >

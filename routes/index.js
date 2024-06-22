@@ -3,6 +3,7 @@ var router = express.Router();
 const ControladorUsuarios = require("../Controladores/UsuariosControlador")
 const ControladorCuentas = require('../Controladores/CuentasControlador')
 const ControladorCooperativas = require('../Controladores/CooperativasControlador')
+const ControladorPrestamos = require('../Controladores/PrestamosControlador')
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 
@@ -40,20 +41,26 @@ router.get("/Login",function(req,res,next){
     .then((corriente) => {
       ControladorCooperativas.ObtenerCoopUsuario(req.cookies.jwt)
       .then((coop) => {
-        ControladorCuentas.ObtenerSaldoAhorro(req.cookies.jwt)
-        .then((ahorro) => {
-          res.render("Login",{ usuario:result,corriente:corriente,ahorro:ahorro, coop:coop})
-
-  
+        ControladorPrestamos.ObtenerPrestamoUsuario(req.cookies.jwt)
+        .then((prestamo) => {
+          ControladorCuentas.ObtenerSaldoAhorro(req.cookies.jwt)
+        .then((ahorro) => {       
+             res.render("Login",{ usuario:result,corriente:corriente,ahorro:ahorro, coop:coop, prestamo:prestamo})
         }).catch((e) => {
           console.error(e)
-          res.render("Login",{ usuario:result,corriente:corriente,ahorro:null,coop:coop})
+          res.render("Login",{ usuario:result,corriente:corriente,ahorro:null,coop:coop,prestamo:prestamo})
   
         })
+        }).catch((e) => {
+          console.error(e)
+          res.render("Login",{ usuario:result,corriente:corriente,ahorro:null,coop:coop,prestamo:null})
+
+        });
+        
       })
       .catch((e) => {
         console.error(e)
-        res.render("Login",{ usuario:result,corriente:corriente,ahorro:null,coop:null })
+        res.render("Login",{ usuario:result,corriente:corriente,ahorro:null,coop:null, prestamo:null })
       })
       
     })
@@ -65,7 +72,7 @@ router.get("/Login",function(req,res,next){
   }).catch((e) => {
     console.error(e)
     res.redirect("Home")
-  })
+  })
 })
 
 router.post("/Login",function(req,res,next){

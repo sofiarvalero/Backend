@@ -8,17 +8,15 @@
 
 </head>
 <body>
+    <a href="/prestamos/agregarPrestamo"><button class="boton">Agregar un Prestamo</button></a>
     <div id="centrar">
-        <% prestamistas.forEach(prestamos => { %>
+        <% prestamos.forEach(prestamos => { %>
      
             <div class="fondos">
                 <h1>Esta es la cuenta de prestamo Nº <%= prestamos.id  %> </h1>
-                <h2>Te ofrecemos un prestamo de: <%= prestamos.cantidadPrestamo  %> </h2>
-                <p>Tan solo tiene un interes de <%= prestamos.cantidadInteres  %> y debes pagarlo los <%= prestamos.fechaPago  %> de cada mes. </p>
-                <p>Las personas que han confiado en nosotros son:  <% prestamos.usuariosAsociados.forEach(usuario => { %> 
-                    <%= usuario %>
-                 </p>
-                <% }) %>
+                <h2>Te ofrecemos un prestamo de: <%= prestamos.prestamo  %> </h2>
+                <p>Tan solo tiene un interes de <%= prestamos.interes  %> y debes pagarlo los <%= prestamos.fechaPagos  %> de cada mes. </p>
+                <p>El Encargado de este prestamo es <%= prestamos.usuarioResponsable %></p>
                 <form method="post">
                     <input type="hidden" value="<%= prestamos.id  %>"  name="prestamo">
                     <input type="submit" value="Unirme a esta prestamos">

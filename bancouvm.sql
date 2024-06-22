@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-06-2024 a las 00:23:58
+-- Tiempo de generación: 22-06-2024 a las 03:50:34
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -80,7 +80,8 @@ INSERT INTO `cuentacooperativa` (`idCuenta`, `idCooperativa`, `idUsuario`, `id`)
 (30, 2, 14, 19),
 (41, 3, 19, 20),
 (41, 1, 19, 21),
-(43, 2, 20, 22);
+(43, 2, 20, 22),
+(45, 2, 21, 23);
 
 -- --------------------------------------------------------
 
@@ -94,6 +95,15 @@ CREATE TABLE `cuentaprestamo` (
   `idUsuario` int(11) NOT NULL,
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cuentaprestamo`
+--
+
+INSERT INTO `cuentaprestamo` (`idCuenta`, `idPrestamista`, `idUsuario`, `id`) VALUES
+(43, 2, 20, 1),
+(43, 1, 20, 2),
+(45, 1, 21, 3);
 
 -- --------------------------------------------------------
 
@@ -157,8 +167,10 @@ INSERT INTO `cuentas` (`tipo`, `saldo`, `usuario_id`, `numero`, `interes`, `id`)
 ('ahorro', 100.000, 18, 5414489286, 0.005, 40),
 ('corriente', 1150.000, 19, 7088787533, NULL, 41),
 ('ahorro', 0.000, 19, 2841771607, 0.005, 42),
-('corriente', 10500.000, 20, 5907074021, NULL, 43),
-('ahorro', 1500.000, 20, 8623007145, 0.005, 44);
+('corriente', 1000.000, 20, 5907074021, NULL, 43),
+('ahorro', 1500.000, 20, 8623007145, 0.005, 44),
+('corriente', 13000.000, 21, 2228204390, NULL, 45),
+('ahorro', 0.000, 21, 6028827150, 0.005, 46);
 
 -- --------------------------------------------------------
 
@@ -167,11 +179,20 @@ INSERT INTO `cuentas` (`tipo`, `saldo`, `usuario_id`, `numero`, `interes`, `id`)
 --
 
 CREATE TABLE `prestamistas` (
-  `prestamo` decimal(11,0) NOT NULL,
-  `fechaPagos` date NOT NULL,
-  `interes` decimal(10,0) NOT NULL,
+  `prestamo` decimal(11,3) NOT NULL,
+  `fechaPagos` varchar(18) NOT NULL,
+  `interes` decimal(10,3) NOT NULL,
+  `usuarioResponsable` varchar(18) NOT NULL,
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `prestamistas`
+--
+
+INSERT INTO `prestamistas` (`prestamo`, `fechaPagos`, `interes`, `usuarioResponsable`, `id`) VALUES
+(1000.000, '0000-00-00', 1.000, 'Lai', 1),
+(15000.000, '10', 0.500, 'Rafael048', 2);
 
 -- --------------------------------------------------------
 
@@ -212,7 +233,8 @@ INSERT INTO `usuarios` (`nombre`, `usuario`, `clave`, `cedula`, `telefono`, `id`
 ('Miguel Angel', 'MiguelA', '$2a$08$4jWMmj6BvcQWXYzExtvjEuZwRdcfxH9Bjjskm6NciVWcC5og26aBe', 453468786, '0241564454', 17),
 ('Red', 'Red', '$2a$08$fDHKw08eeuG8Cnjc8BWDDew4uu7t9TEZLbxZNmLdwIEmZOBM7dR6u', 124324234, '432423525', 18),
 ('Genesis', 'Gene', '$2a$08$f4K6OzVu/Jm0wmSKxoI9EuHwVtgdP9zkjTWRmpy4O4xsuNr6.GliG', 456748653, '015458797/', 19),
-('Leonardo', 'Leo', '$2a$08$e53kThdEiVH349PRcx.8V.t63vBrLzOfvsfSI3amaEG3WGL45mab.', 466574864, '0241657', 20);
+('Leonardo', 'Leo', '$2a$08$e53kThdEiVH349PRcx.8V.t63vBrLzOfvsfSI3amaEG3WGL45mab.', 466574864, '0241657', 20),
+('Diego', 'Diego', '$2a$08$mQu1r/W1WEZt6D6fM6hNP.9kQ9zmlGChBSaH/HuSbdNWJdd1xoMvy', 452453256, '04025899', 21);
 
 --
 -- Índices para tablas volcadas
@@ -255,7 +277,8 @@ ALTER TABLE `cuentas`
 -- Indices de la tabla `prestamistas`
 --
 ALTER TABLE `prestamistas`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `usuarioResponsable` (`usuarioResponsable`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -278,31 +301,31 @@ ALTER TABLE `cooperativas`
 -- AUTO_INCREMENT de la tabla `cuentacooperativa`
 --
 ALTER TABLE `cuentacooperativa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `cuentaprestamo`
 --
 ALTER TABLE `cuentaprestamo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `cuentas`
 --
 ALTER TABLE `cuentas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT de la tabla `prestamistas`
 --
 ALTER TABLE `prestamistas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Restricciones para tablas volcadas
