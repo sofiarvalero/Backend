@@ -22,14 +22,12 @@
        
         form.addEventListener("submit",function(e){
             e.preventDefault()
-            console.log("EventListener")
             let monto = form.montoTotal.value
             let fecha = form.fechaPago.value
             let pagos = form.depositoMensual.value
             let responsable = form.responsable.value
             let duracion = form.duracion.value
             let id = form.id.value
-            console.log(id)
             let datosBody = {
                 monto:monto,
                 fechaPago:fecha,

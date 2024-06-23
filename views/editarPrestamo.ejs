@@ -21,13 +21,11 @@
        
         form.addEventListener("submit",function(e){
             e.preventDefault()
-            console.log("EventListener")
             let prestamo = form.prestamo.value
             let fecha = form.fechaPago.value
             let interes = form.interes.value
             let responsable = form.responsable.value
             let id = form.id.value
-            console.log(id)
             let datosBody = {
                 prestamo:prestamo,
                 fechaPago:fecha,

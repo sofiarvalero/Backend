@@ -1,0 +1,5 @@
+DB_HOST = "Tu host"
+BD_USUARIO ="Tu usuario"
+BD_CLAVE= "Tu clave"
+BD_NOMBRE="tu base de datos"
+JWT_FIRMA= "Tu firma JWT"
