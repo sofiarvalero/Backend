@@ -11,7 +11,7 @@ router.get("/Ahorro",function(req,res,next){
     })
     .catch((e) => {
         console.error(e)
-        res.redirect("/Home")
+        res.render("error",{message:e.message,error:e})
     })
   
   })

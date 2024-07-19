@@ -36,29 +36,35 @@
     <%  })%></p>
       <%  } %>
         </div>
-        <div>
-            <form method="post" >
-                <input type="number" name="valorCorriente" placeholder="Depositar/Retirar Cuenta corriente" class="inputValor">
-                <input type="submit" class="boton">
-            </form>
-            <form method="post" >
-                <input type="number" name="valorAhorro" placeholder="Depositar/Retirar Cuenta ahorro" class="inputValor">
-                <input type="submit" class="boton">
-            </form>
+        <div class="centrar">
+            <div>
+                <form method="post" >
+                    <input type="number" name="valorCorriente" placeholder="Depositar/Retirar Cuenta corriente" class="inputValor">
+                    <input type="submit" class="boton">
+                </form>
+                <form method="post" >
+                    <input type="number" name="valorAhorro" placeholder="Depositar/Retirar Cuenta ahorro" class="inputValor">
+                    <input type="submit" class="boton">
+                </form>
+            </div>
+           
         </div>
         
-        <div id="botonesCont">
-            <div class="espacio">
-                <a href="/cooperativas"><button class="boton">Ver cooperativas</button>
-            </div>
-            <div class="espacio">
-                <a href="/logout"><button class="boton">Cerrar Sesion</button></a>
-            </div>
-            <div class="espacio">
+        <div id="botonesCont" >
+            <div >
                 <a href="/prestamos"><button class="boton">Ver Prestamos</button></a>
             </div>
             <div>
+                <a href="/cooperativas"><button class="boton">Ver cooperativas</button></a>
+            </div>
+            <div>
                 <a href="/cuenta/Ahorro"><button class="boton">Crear Cuenta de ahorro</button></a>
+            </div>
+            <div>
+                <a href="/editarUsuario/<%= usuario.id %>"><button class="boton">Editar Tu usuario</button></a>
+            </div>
+            <div >
+                <a href="/logout"><button class="boton">Cerrar Sesion</button></a>
             </div>
         </div>
     </div>

@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/styles.css">
-
-</head>
-<body>
-    <a href="/prestamos/agregarPrestamo"><button class="boton">Agregar un Prestamo</button></a>
-    <div id="centrar">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="/css/styles.css">
+        
+    </head>
+    <body>
+        <% if(usuario.rol==="admin"){%>
+            <a href="/prestamos/agregarPrestamo"><button class="boton">Agregar un Prestamo</button></a>
+         <% } %>
+        <a href="/Login"><button class="boton">Volver</button></a>
+        
+    <div class="centrar-Wrap">
         <% prestamos.forEach(prestamos => { %>
      
             <div class="fondos">
@@ -17,17 +21,25 @@
                 <h2>Te ofrecemos un prestamo de: <%= prestamos.prestamo  %> </h2>
                 <p>Tan solo tiene un interes de <%= prestamos.interes  %> y debes pagarlo los <%= prestamos.fechaPagos  %> de cada mes. </p>
                 <p>El Encargado de este prestamo es <%= prestamos.usuarioResponsable %></p>
-                <form method="post">
-                    <input type="hidden" value="<%= prestamos.id  %>"  name="prestamo">
-                    <input type="submit" class="boton" value="Unirme a este prestamo">
-                </form>
-                <button class="boton Eliminar" name=" <%= prestamos.id  %> ">Borrar Prestamo</button>
-                <button class="boton Editar" name="<%= prestamos.id %>">Editar prestamo</button>
+                <% if(usuario.rol==="admin"){%>
+                    <div class="botonesContUser">
+                    <button class="boton Eliminar" name=" <%= prestamos.id  %> ">Borrar Prestamo</button>
+                    <button class="boton Editar" name="<%= prestamos.id %>">Editar prestamo</button>
+                </div>
+
+                <% }else{ %>
+                    <form method="post">
+                        <input type="hidden" value="<%= prestamos.id  %>"  name="prestamo">
+                        <button type="submit" class="boton" >Unirme a este prestamo</button>
+    
+                    </form>
+                <% } %>
+                
+                
 
             </div>
       <%  }); %>
     </div>
-    <a href="/Login"><button class="boton">Volver</button></a>
 
     <script>
         let eliminar = document.getElementsByClassName("Eliminar")

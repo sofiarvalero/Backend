@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+    <div class="justificado vh100">
+        <h1>Edita Esta Cooperativa</h1>
     <form >
+        <div class="formularios">
         <input  type="input" placeholder="Monto De La cooperativa" name="montoTotal" required>
         <input  type="input" placeholder="Fecha Del Pago" name="fechaPago" required>
         <input  type="input" placeholder="Pagos Mensuales" name="depositoMensual"  required>
@@ -15,9 +18,13 @@
         <input  type="input" placeholder="Duracion de la cooperativa" name="duracion" required>
         <input type="hidden" name="id" value="<%= id  %>">
         <input type="submit" value="Agregar" class="boton">
+    </div>
+
     </form>
       <a href="/Login"><button class="boton">Volver</button></a>
-      <script>
+    </div>
+
+<script>
         let form = document.querySelector('form')
        
         form.addEventListener("submit",function(e){

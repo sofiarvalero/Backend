@@ -6,6 +6,7 @@ const ControladorCooperativas = require('../Controladores/CooperativasControlado
 const ControladorPrestamos = require('../Controladores/PrestamosControlador')
 const jwt = require('jsonwebtoken');
 const e = require('express');
+const UsuariosControlador = require('../Controladores/UsuariosControlador');
 require('dotenv').config();
 
 router.get("/Home", function(req,res,next){
@@ -17,10 +18,10 @@ router.post("/Home",function(req,res,next){
     res.cookie('jwt',result)
     res.redirect("Login")
    })
-   .catch((err) => {
-    console.error(err)
-    res.redirect("Home")
-   })
+   .catch((e) => {
+    console.error(e)
+    res.render("errorLogin",{message:e.message,error:e})
+  })
 })
 router.get("/registrarse", function(req,res,next){
   res.render("registrarse")
@@ -32,48 +33,59 @@ router.post("/registrarse",function(req,res,next){
   })
   .catch((e)=>{
     console.error(e)
-    res.redirect("Home")
+    res.render("error",{message:e.message,error:e})
   })
 })
 router.get("/Login",function(req,res,next){
-  ControladorUsuarios.Verificar(req.cookies.jwt)
-  .then((result) => {
-    ControladorCuentas.ObtenerSaldoCorriente(req.cookies.jwt)
+  let token = req.cookies.jwt
+  let saldoCorriente = null
+  let saldoAhorro = null
+  let cooperativas = null
+  let prestamos = null
+  UsuariosControlador.VerificarAdmin(token)
+  .then(() => {
+    res.redirect("LoginAdmin")
+  }).catch((e) => {
+    console.log(e)
+    UsuariosControlador.Verificar(token)
+  .then((usuario) => {
+    ControladorCuentas.ObtenerSaldoCorriente(token)
     .then((corriente) => {
-      ControladorCooperativas.ObtenerCoopUsuario(req.cookies.jwt)
-      .then((coop) => {
-        ControladorPrestamos.ObtenerPrestamoUsuario(req.cookies.jwt)
-        .then((prestamo) => {
-          ControladorCuentas.ObtenerSaldoAhorro(req.cookies.jwt)
-        .then((ahorro) => {       
-             res.render("Login",{ usuario:result,corriente:corriente,ahorro:ahorro, coop:coop, prestamo:prestamo})
-        }).catch((e) => {
-          console.error(e)
-          res.render("Login",{ usuario:result,corriente:corriente,ahorro:null,coop:coop,prestamo:prestamo})
-  
-        })
-        }).catch((e) => {
-          console.error(e)
-          res.render("Login",{ usuario:result,corriente:corriente,ahorro:null,coop:coop,prestamo:null})
-
-        });
-        
-      })
-      .catch((e) => {
-        console.error(e)
-        res.render("Login",{ usuario:result,corriente:corriente,ahorro:null,coop:null, prestamo:null })
-      })
-      
-    })
-    .catch((e) => {
+         saldoCorriente= corriente
+    }).catch((e) => {
       console.error(e)
-      res.redirect("Home")
-    });
+    })
+    .finally(()=>{
+      ControladorCuentas.ObtenerSaldoAhorro(token)
+      .then((ahorro) => {
+        saldoAhorro = ahorro
+      }).catch((e) => {
+        console.error(e)
+      }).finally(()=>{
+        ControladorCooperativas.ObtenerCoopUsuario(token)
+        .then((cooperativa) => {
+          cooperativas = cooperativa
+        }).catch((e) => {
+          console.error(e)
+        }).finally(()=>{
+          ControladorPrestamos.ObtenerPrestamoUsuario(token)
+          .then((prestamo) => {
+            prestamos = prestamo
+          }).catch((e) => {
+            console.error(e)
+          }).finally(()=>{
+            res.render("Login",{ usuario:usuario,corriente:saldoCorriente,ahorro:saldoAhorro, coop:cooperativas, prestamo:prestamos})
+          })
+        })
+      })
+  });
+  
+    })
 
   }).catch((e) => {
     console.error(e)
-    res.redirect("Home")
-  })
+    res.render("error",{message:e.message,error:e})
+  })
 })
 
 router.post("/Login",function(req,res,next){
@@ -82,18 +94,22 @@ ControladorCuentas.AgregarSaldo(req.body,req.cookies.jwt)
   res.redirect("Login")
 }).catch((err) => {
   console.error(err)
-  res.redirect("Home")
+  res.render("error",{message:e.message,error:e})
 })
 
 })
-
+router.get("/editarUsuario/:id",function(req,res,next){
+  res.render("editarUsuario",{id:req.params.id})
+})
 router.put("/editarUsuario/:id",function(req,res,next){
+  console.log("LLegue")
   ControladorUsuarios.Modificar(req.params.id,req.body)
   .then((result) => {
     res.send(result)
   })
   .catch((e) => {
     console.error(e)
+    res.render("error",{message:e.message,error:e})
   });
 })
 router.get("/logout",function(req,res,next){
@@ -102,14 +118,34 @@ router.get("/logout",function(req,res,next){
   res.redirect("Home")
 })
 
-router.delete("/eliminarUsuario/:id",function(req,res,next){
-  ControladorUsuarios.Eliminar(req.params.id)
+router.delete("/eliminarUsuario",function(req,res,next){
+  ControladorUsuarios.Eliminar(req.body.id)
   .then(() => {
     res.send("Usuario Eliminado")
   })
   .catch((e) => {
     console.error(e)
+    res.render("error",{message:e.message,error:e})
   })
 })
+router.get("/LoginAdmin",function(req,res,next){
+  ControladorUsuarios.Verificar(req.cookies.jwt)
+  .then((result) => {
+    res.render("LoginAdmin",{admin:result})
+  }).catch((e) => {
+    res.render("error",{message:e.message,error:e})
+
+  });
+})
+router.get("/verUsuarios",function(req,res,next){
+  ControladorUsuarios.VerUsuarios()
+  .then((result) => {
+    res.render("Verusuarios",{usuarios:result})
+  }).catch((e) => {
+    console.error(e)
+    res.render("error",{message:e.message,error:e})
+  });
+})
+
 
 module.exports = router;

@@ -1,17 +1,25 @@
 var express = require('express');
 var router = express.Router();
 const ControladorCooperativas = require('../Controladores/CooperativasControlador')
+const ControladorUsuarios = require('../Controladores/UsuariosControlador')
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 
 router.get("/",function(req,res,next){
-    ControladorCooperativas.Obtener()
+    ControladorUsuarios.Verificar(req.cookies.jwt)
+    .then((token) => {
+        ControladorCooperativas.Obtener()
     .then((cooperativas) => {
-        res.render("cooperativas",{cooperativa:cooperativas})
+        res.render("cooperativas",{cooperativa:cooperativas,usuario:token})
     })
     .catch((e) => {
         console.error(e)
     })
+    }).catch((e) => {
+        res.redirect("/Home")
+
+    });
+    
 })
 
 router.post("/", function(req,res,next){
@@ -57,7 +65,7 @@ router.put("/editar/:id",function(req,res,next){
         res.redirect("/cooperativas")
     })
     .catch((e) => {
-        console.log(e)
+        console.error(e)
         res.redirect("Login")
     });
 })

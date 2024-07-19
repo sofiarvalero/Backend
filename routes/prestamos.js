@@ -1,21 +1,34 @@
 var express = require('express');
 var router = express.Router();
 const ControladorPrestamos = require('../Controladores/PrestamosControlador')
+const ControladorUsuarios = require('../Controladores/UsuariosControlador')
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 
 router.get("/",function(req,res,next){
-    ControladorPrestamos.Obtener()
+    ControladorUsuarios.Verificar(req.cookies.jwt)
+    .then((token) => {
+        ControladorPrestamos.Obtener()
     .then((result) => {
-        res.render("prestamos",{prestamos:result})
+        res.render("prestamos",{prestamos:result,usuario:token})
     })
     .catch((e) => {
         console.error(e)
-        res.redirect("/Login")
+        res.render("error",{message:e.message,error:e})
     })
+    }).catch((e) => {
+        res.render("error",{message:e.message,error:e})
+    });
+    
 })
 router.get("/agregarPrestamo",function(req,res,next){
-    res.render("agregarPrestamos")
+    ControladorUsuarios.VerificarAdmin(req.cookies.jwt)
+    .then(() => {
+        res.render("agregarPrestamos")
+    }).catch((e) => {
+        console.error(e)
+        res.render("error",{message:e.message,error:e})
+    })
 })
 router.post("/agregarPrestamo", function(req,res,next){
     ControladorPrestamos.Agregar(req.body)
@@ -24,7 +37,7 @@ router.post("/agregarPrestamo", function(req,res,next){
     })
     .catch((e) => {
         console.error(e)
-        res.redirect("/Login")
+        res.render("error",{message:e.message,error:e})
     })
 })
 router.post("/", function(req,res,next){
@@ -34,7 +47,7 @@ router.post("/", function(req,res,next){
     })
     .catch((e) => {
       console.error(e)
-      res.redirect("/Login")  
+      res.render("error",{message:e.message,error:e})
     })
 })
 router.delete("/eliminar",function(req,res,next){
@@ -44,7 +57,7 @@ router.delete("/eliminar",function(req,res,next){
     })
     .catch((e) => {
       console.error(e)
-      res.redirect("/Login")  
+      res.render("error",{message:e.message,error:e})
     })
 })
 router.get("/editar/:id",function(req,res,next){
@@ -57,8 +70,9 @@ router.put("/editar/:id",function(req,res,next){
     })
     .catch((e) => {
         console.log(e)
-        res.redirect("Login")
+        res.render("error",{message:e.message,error:e})
     });
 })
+
 
 module.exports = router;

@@ -8,25 +8,32 @@
 
 </head>
 <body>
-    <a href="/cooperativas/agregarCooperativa"><button class="boton">Agregar Nueva cooperativa</button></a>
-    <div id="centrar">
+    <% if(usuario.rol==="admin"){%>
+        <a href="/cooperativas/agregarCooperativa"><button class="boton">Agregar una cooperativa</button></a>
+    <% } %>
+    <a href="/Login"><button class="boton">Volver</button></a>
+
+    <div class="centrar-Wrap">
         <% cooperativa.forEach(cooperativa => { %>
      
             <div class="fondos">
                 <h1>Esta es La coperativa Nº <%= cooperativa.id  %> </h1>
                 <h2>Te ofrecemos un pago de: <%= cooperativa.montoTotal  %> </h2>
                 <p>Tan solo tienes que pagar: <%= cooperativa.depositoMensual  %> los dias <%= cooperativa.fechaPago  %> durante <%= cooperativa.duracion  %></p>
-               
-                <form method="post">
-                    <input type="hidden" value="<%= cooperativa.id  %>"  name="id">
-                    <input type="submit"class="boton" value="Unirme a esta cooperativa">
-                </form>
-                <button class="boton Eliminar" name="<%= cooperativa.id %>">Borrar cooperativa</button>
-                <button class="boton Editar" name="<%= cooperativa.id %>">Editar Esta cooperativa</button>
+                <% if(usuario.rol==="admin"){%>
+                    <div class="botonesContUser">
+                    <button class="boton Eliminar" name="<%= cooperativa.id %>">Borrar cooperativa</button>
+                    <button class="boton Editar" name="<%= cooperativa.id %>">Editar Esta cooperativa</button>
+                </div>
+                <% }else{ %>
+                    <form method="post">
+                        <input type="hidden" value="<%= cooperativa.id  %>"  name="id">
+                        <button type="submit" class="boton" >Unirme a esta cooperativa</button>
+                    </form>
+                <% } %>
             </div>
       <%  }); %>
     </div>
-    <a href="/Login"><button class="boton">Volver</button></a>
 
     <script>
             let eliminar = document.getElementsByClassName("Eliminar")

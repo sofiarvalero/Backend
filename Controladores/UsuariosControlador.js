@@ -67,6 +67,26 @@ class ControladorUsuarios{
             });
         })
     }
+    VerificarAdmin(cookie){
+        return new Promise((resolve,reject)=>{
+            usuariosModelos.VerificarAdmin(cookie)
+            .then(() => {
+                resolve()
+            }).catch((e) => {
+                reject(e)
+            });
+        })
+    }
+    VerUsuarios(){
+        return new Promise((resolve, reject) => {
+            usuariosModelos.VerUsuarios()
+            .then((result) => {
+                resolve(result)
+            }).catch((e) => {
+                reject(e)
+            });
+        })
+    }
 }
 
 module.exports = new ControladorUsuarios

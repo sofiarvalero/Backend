@@ -5,35 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/css/styles.css">
-
 </head>
 <body>
-    <form>
-        <input type="text" name="nuevoUsuario">
-        <input type="text" name="nuevoNombre">
-        <input type="text" name="nuevaClave">
-        <button>Editar</button>
+    <div class="justificado vh100">
+    <form >
+        <h1>Edita La informacion del Usuario Seleccionado</h1>
+
+        <div class="formularios">
+            <input  type="input" placeholder="Nuevo Nombre" name="nombre" required>
+            <input  type="input" placeholder="Nuevo Nombre de Usuario" name="userName" required>
+            <input  type="input" placeholder="Nuevo Telefono" name="telefono"  required>
+            <input  type="input" placeholder="Nueva Cedula" name="cedula" required>
+            <input  type="input" placeholder="Contraseña Anterior" name="contraseñaVieja" required>
+            <input  type="input" placeholder="Nueva Contraseña" name="contraseñaNueva" required>
+            <input  type="hidden" name="id" value="<%= id  %>">
+            <button type="submit" class="boton">Cambiar</button>
+        </div>
     </form>
-</body>
-<script>
-    let boton = document.querySelector('button')
-    boton.addEventListener("click",function(){
-        let nuevoUsuario = document.querySelector('[name="nuevoUsuario"]').value
-        let nuevoNombre = document.querySelector('[name="nuevoNombre"]').value
-        let nuevaClave = document.querySelector('[name]="nuevaClave')
-        let datos = {
-            nuevoUsuario:nuevoUsuario,
-            nuevoNombre:nuevoNombre,
-            nuevaClave:nuevaClave
-        }
-        fetch("/editarUsuarios",{method : "PUT" ,headers : {"Content-Type" : "application/json"},body:  JSON.stringify(datos)})
-        .then(response =>{
-            if(!response.ok){
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }else{
-              location.replace('/editarUsuarios')
-          } 
+
+      <a href="/Login"><button class="boton">Volver</button></a>
+    </div>
+
+      <script>
+        let form = document.querySelector('form')
+       
+        form.addEventListener("submit",function(e){
+            e.preventDefault()
+            let nombre = form.nombre.value
+            let userName= form.userName.value
+            let telefono = form.telefono.value
+            let cedula = form.cedula.value
+            let contraseñaVieja = form.contraseñaVieja.value
+            let contraseñaNueva = form.contraseñaNueva.value
+            let id = form.id.value
+            let datosBody = {
+                nombre:nombre,
+                userNamePago:userName,
+                telefono:telefono,
+                cedula:cedula,
+                contraseñaVieja:contraseñaVieja,
+                contraseñaNueva:contraseñaNueva
+            }
+            fetch(`/editarUsuario/${id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(datosBody)})
+            .then(() => {
+                window.location.href="/verUsuarios"
+            }).catch((err) => {
+                console.error(err)
+                window.location.href="/Login"
+
+            });
         })
-    })
-</script>
+      </script>
+</body>
 </html>
