@@ -1,71 +1,71 @@
-const PrestamosModelos = require("../Modelos/PrestamosModelos")
+const PrestamosModelos = require("../Modelos/PrestamosModelos");
 
-class ControladorPrestamos{
-    Obtener(){
-        return new Promise((resolve,reject)=>{
-            PrestamosModelos.Obtener()
-            .then((result) => {
-                resolve(result)
-            })
-            .catch((e) => {
-                reject(e)
-            });
+class ControladorPrestamos {
+  Obtener() {
+    return new Promise((resolve, reject) => {
+      PrestamosModelos.Obtener()
+        .then((result) => {
+          resolve(result);
         })
-    }
-    Agregar(datos){
-        return new Promise((resolve,reject)=>{
-            PrestamosModelos.Agregar(datos)
-            .then((result) => {
-                resolve(result)
-            })
-            .catch((e) => {
-              reject(e)  
-            })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  Agregar(datos) {
+    return new Promise((resolve, reject) => {
+      PrestamosModelos.Agregar(datos)
+        .then((result) => {
+          resolve(result);
         })
-     }
-     Unirse(ID,datos){
-        return new Promise((resolve,reject)=>{
-            PrestamosModelos.Unirse(ID,datos)
-            .then(() => {
-                resolve()
-            })
-            .catch((e) => {
-              reject(e)  
-            })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  Unirse(ID, datos) {
+    return new Promise((resolve, reject) => {
+      PrestamosModelos.Unirse(ID, datos)
+        .then(() => {
+          resolve();
         })
-    }
-    ObtenerPrestamoUsuario(datos){
-        return new Promise((resolve,reject)=>{
-            PrestamosModelos.ObtenerPrestamoUsuario(datos)
-            .then((result) => {
-                resolve(result)
-            })
-            .catch((e) => {
-              reject(e)  
-            })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  ObtenerPrestamoUsuario(datos) {
+    return new Promise((resolve, reject) => {
+      PrestamosModelos.ObtenerPrestamoUsuario(datos)
+        .then((result) => {
+          resolve(result);
         })
-    }
-    Eliminar(id){
-        return new Promise((resolve,reject)=>{
-            PrestamosModelos.Eliminar(id)
-            .then(() => {
-              resolve()  
-            })
-            .catch((e) => {
-                reject(e)
-            })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  Eliminar(id) {
+    return new Promise((resolve, reject) => {
+      PrestamosModelos.Eliminar(id)
+        .then(() => {
+          resolve();
         })
-    }
-    Editar(id,datos){
-        return new Promise((resolve, reject) => {
-            PrestamosModelos.Editar(id,datos)
-            .then(() => {
-                resolve()
-            })
-            .catch((e) => {
-               reject(e) 
-            });
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  Editar(id, datos) {
+    return new Promise((resolve, reject) => {
+      PrestamosModelos.Editar(id, datos)
+        .then(() => {
+          resolve();
         })
-    }
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
 }
-module.exports = new ControladorPrestamos
+module.exports = new ControladorPrestamos();

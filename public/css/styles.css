@@ -1,104 +1,109 @@
-body{
-    background: url(../images/Puede-un-inquilino-ser-miembro-de-la-Junta-Directiva-de-la-Asamblea-de-Propietarios.jpg);
-    font-family: sans-serif;
-    }
-    input,select{
-        height: 25px;
-        border-radius: 10px;
-        margin: 10px;
-        margin-left: 20px;
-        width: 170px;
-        border: 1px solid gray;
-        color:black ;
-    }
-    
-    .centrar{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    
-    }
-    
-    #cabecera{
-        display: flex;
-        align-items: center;
-        text-align: center;
-        justify-content: space-around;
-    
-    }
-    #botonRegistro{
-        margin-left: 15px;
-    }
-    #formulario{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .boton{
-        width: 165px;
-        height: 35px;
-        border-radius: 10px;
-        background-color: rgb(62, 62, 201);
-        color: white;
-        cursor: pointer;
-    }
-    .fondos{
-        background-color: rgb(255, 255, 255,0.7);
-        width: 50%;
-        border-radius: 10px;
-        margin: 4px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    #alinear{
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    }
-    #botonesCont{
-        display: flex;
-        justify-content: space-between;
-        align-content: space-around;
-        flex-direction: column;
-        min-height: 300px;
-    }
-    .botonesContUser{
-        display: flex;
-        justify-content: space-between;
-        align-content: space-around;
-        flex-direction: column;
-        min-height: 100px;
-    }
-    .inputValor{
-        width: 70%;
-    }
-    .espacio{
-        margin-bottom: 25px;
-    }
-    .centrar-Wrap{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-    .formularios{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center;
-        background-color: rgb(255, 255, 255,0.7);
-        border-radius: 10px;
-        min-width: 500px;
-        min-height: 500px;
-    }
-    .vh100{
-        height: 96vh;
-    }
-    .justificado{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center;
-    }
+body {
+  background: url(../images/Puede-un-inquilino-ser-miembro-de-la-Junta-Directiva-de-la-Asamblea-de-Propietarios.jpg);
+  font-family: sans-serif;
+}
+input,
+select {
+  height: 25px;
+  border-radius: 10px;
+  margin: 10px;
+  margin-left: 20px;
+  width: 170px;
+  border: 1px solid gray;
+  color: black;
+}
+
+.centrar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#cabecera {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: space-around;
+}
+#botonRegistro {
+  margin-left: 15px;
+}
+#formulario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.boton {
+  width: 165px;
+  height: 35px;
+  border-radius: 10px;
+  background-color: rgb(62, 62, 201);
+  color: white;
+  cursor: pointer;
+}
+.fondos {
+  background-color: rgb(255, 255, 255, 0.7);
+  width: 50%;
+  border-radius: 10px;
+  margin: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#alinear {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+#botonesCont {
+  display: flex;
+  justify-content: space-between;
+  align-content: space-around;
+  flex-direction: column;
+  min-height: 300px;
+}
+.botonesContUser {
+  display: flex;
+  justify-content: space-between;
+  align-content: space-around;
+  flex-direction: column;
+  min-height: 100px;
+}
+.inputValor {
+  width: 70%;
+}
+.espacio {
+  margin-bottom: 25px;
+}
+.centrar-Wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.formularios {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: rgb(255, 255, 255, 0.7);
+  border-radius: 10px;
+  min-width: 500px;
+  min-height: 500px;
+}
+.vh100 {
+  height: 96vh;
+}
+.justificado {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.margin{
+    margin-bottom: 20px;
+}
+.fondoMulti{
+    background: url(../images/pngtree-abstract-fabric-crease-beige-brown-smooth-color-background-texture-luxury-style-picture-image_1981997.jpg);
+}

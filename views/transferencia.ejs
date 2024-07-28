@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="justificado vh100">
+        <h1>Realiza una transferencia</h1>
+        <form method="post">
+            <div class="formularios">
+                <input  type="input" placeholder="Usuario a transferir" name="usuario" required>
+                <input  type="number" placeholder="Numero de cuenta" name="destino" required>
+                <input  type="number" placeholder="Monto a transferir" name="monto" required>
+                <input  type="input" placeholder="Concepto" name="concepto" required>
+                <input  type="password" placeholder="Ingresa tu contraseña" name="clave"  required>
+
+                <label for="cuenta">Cuenta para realizar la transferencia</label>
+                <select name="cuenta" >
+                    <option value="corriente">Corriente</option>
+                    <option value="ahorro">Ahorro</option>
+                </select>
+                <button type="submit" class="boton">Transferir</button>
+                <% if(mensaje){%>
+                    <p>   <%= mensaje %>  </p>
+               <% } %>
+            </div>
+           
+          </form>
+          <a href="/cuenta/registro"><button class="boton">Ver Registro de Transferencias</button></a>
+
+          <a href="/Login"><button class="boton">Volver</button></a>
+
+    </div>
+</body>
+</html>

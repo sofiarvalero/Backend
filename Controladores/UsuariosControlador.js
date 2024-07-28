@@ -1,92 +1,101 @@
-const UsuariosModelos = require("../Modelos/UsuariosModelos")
-let usuariosModelos = require("../Modelos/UsuariosModelos")
+const UsuariosModelos = require("../Modelos/UsuariosModelos");
+let usuariosModelos = require("../Modelos/UsuariosModelos");
 
-class ControladorUsuarios{
-
-    Registrar(Datos){
-        return new Promise((resolve,reject)=>{
-        usuariosModelos.Registrar(Datos)
-        .then(()=>{
-            resolve()
+class ControladorUsuarios {
+  Registrar(Datos) {
+    return new Promise((resolve, reject) => {
+      usuariosModelos
+        .Registrar(Datos)
+        .then(() => {
+          resolve();
         })
-       .catch((e)=>{
-        reject(e)
-       })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  Login(Datos) {
+    return new Promise((resolve, reject) => {
+      usuariosModelos
+        .Login(Datos)
+        .then((result) => {
+          resolve(result);
         })
-    }
-    Login(Datos){
-        return new Promise((resolve,reject)=>{
-            usuariosModelos.Login(Datos)
-            .then((result)=>{
-                resolve(result)
-            })
-           .catch((e)=>{
-            reject(e)
-           })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  Logout(cookie) {
+    return new Promise((resolve, reject) => {
+      usuariosModelos
+        .Logout(cookie)
+        .then(() => {
+          resolve();
         })
-    }
-    Logout(cookie){
-        return new Promise((resolve,reject)=>{
-            usuariosModelos.Logout(cookie)
-            .then(() => {
-                resolve()
-            }).catch((e) => {
-                reject(e)
-            });
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  Verificar(cookie) {
+    return new Promise((resolve, reject) => {
+      usuariosModelos
+        .Verificar(cookie)
+        .then((result) => {
+          resolve(result);
         })
-    }
-    Verificar(cookie){
-        return new Promise((resolve,reject)=>{
-            usuariosModelos.Verificar(cookie)
-            .then((result) => {
-                resolve(result)
-            }).catch((e) => {
-                reject(e)
-            });
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  Modificar(token, datos) {
+    return new Promise((resolve, reject) => {
+      UsuariosModelos.Modificar(token, datos)
+        .then((result) => {
+          resolve(result);
         })
-    }
-    Modificar(token,datos){
-        return new Promise((resolve, reject) => {
-            UsuariosModelos.Modificar(token,datos)
-            .then((result) => {
-                resolve(result)
-            })
-            .catch((e) => {
-                reject(e)    
-            });
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  Eliminar(id) {
+    return new Promise((resolve, reject) => {
+      UsuariosModelos.Eliminar(id)
+        .then(() => {
+          resolve();
         })
-    }
-    Eliminar(id){
-        return new Promise((resolve, reject) => {
-            UsuariosModelos.Eliminar(id)
-            .then(() => {
-                resolve()
-            })
-            .catch((e) => {
-                reject(e)    
-            });
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  VerificarAdmin(cookie) {
+    return new Promise((resolve, reject) => {
+      usuariosModelos
+        .VerificarAdmin(cookie)
+        .then(() => {
+          resolve();
         })
-    }
-    VerificarAdmin(cookie){
-        return new Promise((resolve,reject)=>{
-            usuariosModelos.VerificarAdmin(cookie)
-            .then(() => {
-                resolve()
-            }).catch((e) => {
-                reject(e)
-            });
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  VerUsuarios() {
+    return new Promise((resolve, reject) => {
+      usuariosModelos
+        .VerUsuarios()
+        .then((result) => {
+          resolve(result);
         })
-    }
-    VerUsuarios(){
-        return new Promise((resolve, reject) => {
-            usuariosModelos.VerUsuarios()
-            .then((result) => {
-                resolve(result)
-            }).catch((e) => {
-                reject(e)
-            });
-        })
-    }
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
 }
 
-module.exports = new ControladorUsuarios
+module.exports = new ControladorUsuarios();

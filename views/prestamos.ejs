@@ -1,78 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" href="/css/styles.css">
-        
-    </head>
-    <body>
-        <% if(usuario.rol==="admin"){%>
-            <a href="/prestamos/agregarPrestamo"><button class="boton">Agregar un Prestamo</button></a>
-         <% } %>
-        <a href="/Login"><button class="boton">Volver</button></a>
-        
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body class="fondoMulti">
+    <% if(usuario.rol==="admin"){%>
+    <a href="/prestamos/agregarPrestamo"
+      ><button class="boton">Agregar un Prestamo</button></a
+    >
+    <% } %>
+    <a href="/Login"><button class="boton">Volver</button></a>
+
     <div class="centrar-Wrap">
-        <% prestamos.forEach(prestamos => { %>
-     
-            <div class="fondos">
-                <h1>Esta es la cuenta de prestamo Nº <%= prestamos.id  %> </h1>
-                <h2>Te ofrecemos un prestamo de: <%= prestamos.prestamo  %> </h2>
-                <p>Tan solo tiene un interes de <%= prestamos.interes  %> y debes pagarlo los <%= prestamos.fechaPagos  %> de cada mes. </p>
-                <p>El Encargado de este prestamo es <%= prestamos.usuarioResponsable %></p>
-                <% if(usuario.rol==="admin"){%>
-                    <div class="botonesContUser">
-                    <button class="boton Eliminar" name=" <%= prestamos.id  %> ">Borrar Prestamo</button>
-                    <button class="boton Editar" name="<%= prestamos.id %>">Editar prestamo</button>
-                </div>
+      <% prestamos.forEach(prestamos => { %>
 
-                <% }else{ %>
-                    <form method="post">
-                        <input type="hidden" value="<%= prestamos.id  %>"  name="prestamo">
-                        <button type="submit" class="boton" >Unirme a este prestamo</button>
-    
-                    </form>
-                <% } %>
-                
-                
+      <div class="fondos">
+        <h1>Esta es la cuenta de prestamo Nº <%= prestamos.id %></h1>
+        <h2>Te ofrecemos un prestamo de: <%= prestamos.prestamo %></h2>
+        <p>
+          Tan solo tiene un interes de <%= prestamos.interes %> y debes pagarlo
+          los <%= prestamos.fechaPagos %> de cada mes.
+        </p>
+        <p>
+          El Encargado de este prestamo es <%= prestamos.usuarioResponsable %>
+        </p>
+        <% if(usuario.rol==="admin"){%>
+        <div class="botonesContUser">
+          <button class="boton Eliminar" name=" <%= prestamos.id  %> ">
+            Borrar Prestamo
+          </button>
+          <button class="boton Editar" name="<%= prestamos.id %>">
+            Editar prestamo
+          </button>
+        </div>
 
-            </div>
-      <%  }); %>
+        <% }else{ %>
+        <form method="post">
+          <input type="hidden" value="<%= prestamos.id  %>" name="prestamo" />
+          <button type="submit" class="boton">Unirme a este prestamo</button>
+        </form>
+        <% } %>
+      </div>
+      <% }); %>
     </div>
 
     <script>
-        let eliminar = document.getElementsByClassName("Eliminar")
-        console.log(eliminar)
-        for(let i = 0;i<eliminar.length;i++){
-            eliminar[i].addEventListener("click", function(){
-            let id = eliminar[i].name
-            fetch('/prestamos/eliminar', {method: 'DELETE',headers:{'Content-Type':'application/json'},body: JSON.stringify({id:id})})
-            .then(()=>{
-                  window.location.href="/prestamos"
-             })
-              .catch((e)=>{
-                 console.log(e)
-                 window.location.href="/Login"
+      let eliminar = document.getElementsByClassName("Eliminar");
+      console.log(eliminar);
+      for (let i = 0; i < eliminar.length; i++) {
+        eliminar[i].addEventListener("click", function () {
+          let id = eliminar[i].name;
+          fetch("/prestamos/eliminar", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: id }),
+          })
+            .then(() => {
+              window.location.href = "/prestamos";
             })
+            .catch((e) => {
+              console.log(e);
+              window.location.href = "/Login";
+            });
+        });
+      }
+      let editar = document.getElementsByClassName("Editar");
+      for (let i = 0; i < editar.length; i++) {
+        editar[i].addEventListener("click", function () {
+          let id = eliminar[i].name;
+          fetch(`/prestamos/editar/${id}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          })
+            .then(() => {
+              window.location.href = `/prestamos/editar/${id}`;
             })
-        }
-        let editar = document.getElementsByClassName("Editar")
-            for(let i = 0;i<editar.length;i++){
-                editar[i].addEventListener("click", function(){
-                let id = eliminar[i].name
-                fetch(`/prestamos/editar/${id}`, {method: 'GET',headers:{'Content-Type':'application/json'}})
-                .then(()=>{
-                      window.location.href=`/prestamos/editar/${id}`
-                 })
-                  .catch((e)=>{
-                     console.log(e)
-                     window.location.href="/Login"
-                })
-                })
-            }
-            
-         
-</script>
-</body>
+            .catch((e) => {
+              console.log(e);
+              window.location.href = "/Login";
+            });
+        });
+      }
+    </script>
+  </body>
 </html>

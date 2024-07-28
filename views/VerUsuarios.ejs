@@ -1,75 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body class="fondoMulti">
     <a href="/Login"><button class="boton">Volver</button></a>
-<div class="centrar-Wrap">
-    <% usuarios.forEach(usuario=>{ %>
-        <div class="fondos">
-            <p>
-                <%= usuario.nombre  %>
-            </p>  
-            <p>
-                <%= usuario.telefono  %>
-            </p> 
-            <p>
-                <%= usuario.cedula  %>
-            </p> 
-            <p>
-                <%= usuario.clave  %>
-            </p> 
-            <div class="botonesContUser">
-                <div>
-                    <button class="boton Eliminar" name="<%= usuario.id %>">Borrar Este usuario</button>
-
-                </div>
-                <div>
-                    <button class="boton Editar" name="<%= usuario.id %>">Editar Este usuario</button>  
-                </div>
-            </div>
-            
+    <div class="centrar-Wrap">
+      <% usuarios.forEach(usuario=>{ %>
+      <div class="fondos">
+        <p>El nombre del usuario es: <%= usuario.nombre %></p>
+        <p>Su numero de telefono es: <%= usuario.telefono %></p>
+        <p>Su cedula es: <%= usuario.cedula %></p>
+        <p>Su clave encriptada es: <%= usuario.clave %></p>
+        <div class="botonesContUser">
+          <div>
+            <button class="boton Eliminar" name="<%= usuario.id %>">
+              Borrar Este usuario
+            </button>
+          </div>
+          <div>
+            <button class="boton Editar" name="<%= usuario.id %>">
+              Editar Este usuario
+            </button>
+          </div>
         </div>
-       
-     <%   }) %>
-</div>
-   
+      </div>
 
-</body>
-<script>
-    let eliminar = document.getElementsByClassName("Eliminar")
-    for(let i = 0;i<eliminar.length;i++){
-        eliminar[i].addEventListener("click", function(){
-        let id = eliminar[i].name
-        fetch('/eliminarUsuario', {method: 'DELETE',headers:{'Content-Type':'application/json'},body: JSON.stringify({id:id})})
-        .then(()=>{
-              window.location.href="/verUsuarios"
-         })
-          .catch((e)=>{
-             console.log(e)
-             window.location.href="/Login"
+      <% }) %>
+    </div>
+  </body>
+  <script>
+    let eliminar = document.getElementsByClassName("Eliminar");
+    for (let i = 0; i < eliminar.length; i++) {
+      eliminar[i].addEventListener("click", function () {
+        let id = eliminar[i].name;
+        fetch("/eliminarUsuario", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: id }),
         })
-        })
+          .then(() => {
+            window.location.href = "/verUsuarios";
+          })
+          .catch((e) => {
+            console.log(e);
+            window.location.href = "/Login";
+          });
+      });
     }
-    let editar = document.getElementsByClassName("Editar")
-    for(let i = 0;i<editar.length;i++){
-        editar[i].addEventListener("click", function(){
-        let id = eliminar[i].name
-        fetch(`/editarUsuario/${id}`, {method: 'GET',headers:{'Content-Type':'application/json'}})
-        .then(()=>{
-              window.location.href=`/editarUsuario/${id}`
-         })
-          .catch((e)=>{
-             console.log(e)
-             window.location.href="/Login"
+    let editar = document.getElementsByClassName("Editar");
+    for (let i = 0; i < editar.length; i++) {
+      editar[i].addEventListener("click", function () {
+        let id = eliminar[i].name;
+        fetch(`/editarUsuario/${id}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
         })
-        })
+          .then(() => {
+            window.location.href = `/editarUsuario/${id}`;
+          })
+          .catch((e) => {
+            console.log(e);
+            window.location.href = "/Login";
+          });
+      });
     }
-        
-     
-</script>
+  </script>
 </html>

@@ -1,72 +1,82 @@
-const CooperativasModelos = require('../Modelos/CooperativasModelos')
+const CooperativasModelos = require("../Modelos/CooperativasModelos");
 
-class ControladorCooperativas{
-    Obtener(){
-        return new Promise((resolve,reject)=>{
-            CooperativasModelos.Obtener()
-            .then((cooperativas) => {
-                resolve(cooperativas)
-            })
-            .catch((e) => {
-                reject(e)    
-            })
+class ControladorCooperativas {
+  Obtener() {
+    return new Promise((resolve, reject) => {
+      CooperativasModelos.Obtener()
+        .then((cooperativas) => {
+          resolve(cooperativas);
         })
-    }
-    Agregar(datos){
-        return new Promise((resolve,reject)=>{
-            CooperativasModelos.Agregar(datos)
-            .then((result) => {
-                resolve(result)
-            })
-            .catch((e) => {
-              reject(e)  
-            })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  Agregar(datos) {
+    return new Promise((resolve, reject) => {
+      CooperativasModelos.Agregar(datos)
+        .then((result) => {
+          resolve(result);
         })
-    }
-    Unirse(ID,datos){
-        return new Promise((resolve,reject)=>{
-            CooperativasModelos.Unirse(ID,datos)
-            .then(() => {
-                resolve()
-            })
-            .catch((e) => {
-              reject(e)  
-            })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  Unirse(ID, datos) {
+    return new Promise((resolve, reject) => {
+      CooperativasModelos.Unirse(ID, datos)
+        .then(() => {
+          resolve();
         })
-    }
-    ObtenerCoopUsuario(idUsuario){
-        return new Promise((resolve,reject)=>{
-            CooperativasModelos.ObtenerCoopUsuario(idUsuario)
-            .then((result) => {
-                 resolve(result)  
-            })
-            .catch((e) => {
-                reject(e)
-             })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  ObtenerCoopUsuario(idUsuario) {
+    return new Promise((resolve, reject) => {
+      CooperativasModelos.ObtenerCoopUsuario(idUsuario)
+        .then((result) => {
+          resolve(result);
         })
-        
-    }
-    Eliminar(id){
-        return new Promise((resolve,reject)=>{
-            CooperativasModelos.Eliminar(id)
-            .then(() => {
-              resolve()  
-            })
-            .catch((e) => {
-                reject(e)
-            })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  Eliminar(id) {
+    return new Promise((resolve, reject) => {
+      CooperativasModelos.Eliminar(id)
+        .then(() => {
+          resolve();
         })
-    }
-    Editar(id,datos){
-        return new Promise((resolve, reject) => {
-            CooperativasModelos.Editar(id,datos)
-            .then(() => {
-                resolve()
-            })
-            .catch((e) => {
-               reject(e) 
-            });
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  Editar(id, datos) {
+    return new Promise((resolve, reject) => {
+      CooperativasModelos.Editar(id, datos)
+        .then(() => {
+          resolve();
         })
-    }
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+  SalirCooperativa(idUsuario, idCooperativa, monto) {
+    return new Promise((resolve, reject) => {
+      CooperativasModelos.SalirCooperativa(idUsuario, idCooperativa, monto)
+        .then((result) => {
+          resolve();
+        })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
 }
-module.exports = new ControladorCooperativas
+module.exports = new ControladorCooperativas();

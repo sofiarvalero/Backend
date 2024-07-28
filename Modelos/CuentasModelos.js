@@ -1,5 +1,8 @@
 const conexion = require("../conexionBD")
 const jwt = require('jsonwebtoken')
+const bcryptjs = require('bcryptjs')
+const CuentasControlador = require("../Controladores/CuentasControlador")
+
     class CuentasModelos{
         CrearCorriente(ID){
             return new Promise(async(resolve,reject)=>{
@@ -146,6 +149,115 @@ const jwt = require('jsonwebtoken')
               })
             }) 
         } 
+        Transferencia(user,datos){
+            return new Promise((resolve, reject) => {
+                let concepto = datos.concepto
+                let monto = datos.monto
+                let usuario = datos.usuario
+                let cuentaDestino = datos.destino
+                let cuentaUsuario = datos.cuenta
+                let clave = datos.clave
+                let usuarioDestinoID = null
+                let decodificado = jwt.decode(user,process.env.JWT_FIRMA)
+                let queryContraseña = `SELECT * FROM usuarios WHERE id = ${decodificado.id}`
+                conexion.query(queryContraseña,async function(err,result){
+                    if(err){
+                        reject(err)
+                    }else{
+                        let claveBD=result[0].clave
+                        let usuarioOrigen=result[0].usuario
+                        let claveDesencriptada = await bcryptjs.compare(clave,claveBD)
+                        if(claveDesencriptada){
+                            let query = `SELECT * FROM cuentas WHERE usuario_id = ${decodificado.id} AND tipo = '${cuentaUsuario}'`
+                            let queryUser = `SELECT * FROM usuarios WHERE usuario = '${usuario}'`
+                            conexion.query(queryUser,function(err,result){
+                                if(err){
+                                    reject(err)
+                                }else{
+                                    usuarioDestinoID = result[0].id
+                                    console.log(usuarioDestinoID)
+                                }
+                            })
+                            conexion.query(query,function(err,result){
+                                if(err){
+                                    reject(err)
+                                }else{
+                                    if(result.length === 0){
+                                        reject(new Error('No se encontro la cuenta'))
+                                    }else{
+                                        let cuenta = result[0]
+                                        if(cuenta.saldo>=monto){
+                                            let queryUsuarioDestino = `SELECT saldo AS saldoDestino FROM cuentas WHERE numero = '${cuentaDestino}' AND usuario_id = ${usuarioDestinoID} `
+                                            conexion.query(queryUsuarioDestino,function(err,result){
+                                                if(err){
+                                                    reject(err)
+                                                }else{
+                                                    if(result.length>0){
+                                                        let saldoDestino = result[0].saldoDestino + monto
+                                                        let saldoOrigen = cuenta.saldo - monto
+                                                        let queryUpdateDestino = `UPDATE cuentas SET saldo =${saldoDestino} WHERE numero = ${cuentaDestino}`
+                                                        let queryUpdateOrigen = `UPDATE cuentas SET saldo =${saldoOrigen} WHERE usuario_id = ${decodificado.id} AND tipo = '${cuentaUsuario}'`
+                                                        conexion.query(queryUpdateDestino,function(err,result){
+                                                            if(err){
+                                                                reject(err)
+                                                            }else{
+                                                                conexion.query(queryUpdateOrigen,async function(err,result){
+                                                                    if(err){
+                                                                        reject(err)
+                                                                    }else{
+                                                                            let fecha = new Date()
+                                                                            let fechaHora = fecha.toLocaleDateString()
+                                                                            let operacion = ""
+                                                                            for(let i = 0;i<5;i++){
+                                                                                operacion += await new Promise((resolve,reject)=>{
+                                                                                    resolve(Math.floor(Math.random() * 10));
+                                                                                })
+                                                                            }
+                                                                            let queryRegistro = `INSERT INTO transferencias (usuarioOrigen,usuarioDestino,monto,concepto,cuentaOrigen,cuentaDestino,fecha,operacion) VALUES ('${usuarioOrigen}','${usuario}',${monto},'${concepto}',${cuenta.numero},${cuentaDestino},'${fechaHora}','${operacion}')`
+                                                                            conexion.query(queryRegistro,function(err,result){
+                                                                                if(err){
+                                                                                    reject(err)
+                                                                                }else{
+                                                                                    resolve("Transferencia Realizada con exito")
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                })
+                                                            }
+                                                        })
+
+                                                    }else{
+                                                        reject(new Error("El Usuario y el numero de cuenta no coinciden"))
+                                                    }
+                                                }
+                                            })
+                                        }else{
+                                            reject(new Error("El saldo no es suficiente"))
+                                        }
+                                    }
+                                }
+                            })
+                        }else{
+                            reject(new Error("Clave Incorrecta"))
+                        }
+                    }
+                })
+               
+            })
+        }
+     Registro(usuario){
+        return new Promise((resolve, reject) => {
+            let decodificado = jwt.decode(usuario,process.env.JWT_FIRMA)
+            let query = `SELECT * FROM transferencias WHERE usuarioDestino = '${decodificado.usuario}' OR usuarioOrigen = '${decodificado.usuario}'`
+            conexion.query(query,function(err,result){
+                if(err){
+                reject(err)
+                }else{
+                    resolve(result)
+                }
+            })
+        })
+     }   
     }
 
 module.exports = new CuentasModelos
